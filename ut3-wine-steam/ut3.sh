@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /opt/ut3
-/usr/bin/wine ut3.exe
+cd /opt/ut3/Binaries
+/usr/bin/wine UT3.exe -nostartupmovies

@@ -12,7 +12,7 @@ pkgdesc="Unreal Tournament 3 Black using WINE with data via Steam"
 license=('custom')
 url='https://store.steampowered.com/app/13210/Unreal_Tournament_3_Black/'
 sha256sums=('7fa682a9a2c15facd1d1c6361754cddca1dd2c9913d0c90585ff694fa45d62d9'
-            '80ca2349e217db014d41f9bee6645d96e18d876917a2bd6b0929ef22bea65fea'
+            'e6accb8e23cf06bdd4c70ac8ef095208423777da65b479177b43efe8e03cfb10'
             '1f9441dc8dbae60187883799125393c4333f22eb2eb33fea5bf4a6270bdaa055')
 
 prepare() {
