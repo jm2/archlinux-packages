@@ -2,10 +2,12 @@
 
 pkgname=aoe3-wine-steam
 pkgver=1.03
-pkgrel=1
+pkgrel=2
 arch=('i686' 'x86_64')
 makedepends=('steamcmd')
 depends=('wine' 'winetricks')
+depends_i686=('mpg123')
+depends_x86_64=('lib32-mpg123')
 source=("aoe3.sh" "aoe3.desktop" "aoe3.png")
 pkgdesc="Age of Empires 3 using WINE with data via Steam"
 install=aoe3.install
