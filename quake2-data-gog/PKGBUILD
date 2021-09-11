@@ -17,7 +17,7 @@ source=("setup_${_pkgname}_quad_damage_${_pkgver}.exe::gogdownloader://quake_ii_
 sha256sums=('08b6addf4a33ab09a7846e95a879a33017410f8ddb80152cd4759336747f7fa7')
 
 # If you want to use lgogdownloader add the following to /etc/makepkg.conf
-# DLAGENTS+=('goggogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
+# DLAGENTS+=('gogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
 DLAGENTS+=("gogdownloader::/usr/bin/echo Could not find gog installer file (%u). Manually download it to \"$(pwd)\", or set up a gogdownloader:// DLAGENT in /etc/makepkg.conf. See PKGBUILD for example.")
 
 prepare() {

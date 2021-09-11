@@ -15,7 +15,7 @@ sha256sums=('405793776eda4d2fb54dcf20652021bc994070be60db2964395b79b61fbdae7f'
 depends=(libgl libx11 libxext desktop-file-utils)
 
 # If you want to use lgogdownloader add the following to /etc/makepkg.conf
-# DLAGENTS+=('goggogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
+# DLAGENTS+=('gogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
 DLAGENTS+=("gogdownloader::/usr/bin/echo Could not find gog installer file (%u). Manually download it to \"$(pwd)\", or set up a gogdownloader:// DLAGENT in /etc/makepkg.conf. See PKGBUILD for example.")
 
 package() {

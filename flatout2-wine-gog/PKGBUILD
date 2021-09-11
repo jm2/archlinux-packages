@@ -20,7 +20,7 @@ sha256sums=('b13e87de2e7386a120cd6dfc194e6e9a6bd522fe51fb8a7ad3faad6ab0475df9'
             '609bb031cf4b3786f608509968e7d9735861735a0fef35dc45b1fa27bff9958f')
 
 # If you want to use lgogdownloader add the following to /etc/makepkg.conf
-# DLAGENTS+=('goggogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
+# DLAGENTS+=('gogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
 DLAGENTS+=("gogdownloader::/usr/bin/echo Could not find gog installer file (%u). Manually download it to \"$(pwd)\", or set up a gogdownloader:// DLAGENT in /etc/makepkg.conf. See PKGBUILD for example.")
 
 prepare() {
