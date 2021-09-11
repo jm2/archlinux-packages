@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GRID
+Comment=Race Driver: GRID (2008) WINE
+Exec=/usr/bin/grid
+Icon=grid
+Terminal=false
+Type=Application
+Categories=Application;Game;
