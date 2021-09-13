@@ -1,0 +1,49 @@
+# Maintainer: John-Michael Mulesa <jmulesa at gmail dot com>
+
+pkgname=simcity4-wine-gog
+_pkgname=simcity4
+pkgver=1.1.641
+_pkgver="1.1.641_hotfix_(25621)"
+pkgrel=1
+pkgdesc="SimCity 4 Deluxe Edition using WINE with data via GOG"
+arch=('i686' 'x86_64')
+url="https://www.gog.com/game/simcity_4_deluxe_edition"
+license=('custom')
+depends=('wine')
+makedepends=('innoextract' 'icoutils')
+install=simcity4.install
+source=("setup_simcity_4_deluxe_edition_${_pkgver}.exe::gogdownloader://simcity_4_deluxe_edition/en1installer0"
+        "${_pkgname}.desktop" "${_pkgname}.sh")
+sha256sums=('1966f23a6c7d4faba18d7e09c887c5678192cccedb349e75fa055c63966e6e4d'
+            'c12dcb168fee714b1bc186c156e57010f20111b0909fb49ed7ea212f4903eaec'
+            '19e420a679c18d7b78fbd179d2f62073f892226b9acfc92e9ee2dfeca2968127')
+
+# If you want to use lgogdownloader add the following to /etc/makepkg.conf
+# DLAGENTS+=('gogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
+DLAGENTS+=("gogdownloader::/usr/bin/echo Could not find gog installer file (%u). Manually download it to \"$(pwd)\", or set up a gogdownloader:// DLAGENT in /etc/makepkg.conf. See PKGBUILD for example.")
+
+prepare() {
+    mkdir -p ${_pkgname}
+    cd ${_pkgname}
+    innoextract --gog -s ../"setup_simcity_4_deluxe_edition_${_pkgver}.exe"
+    cd ..
+    icotool -x -o . app/goggame-*.ico
+}
+
+package() {
+    mkdir -p $pkgdir/opt/${_pkgname}
+
+    # Install game icon.
+    install -Dm644 "${srcdir}/goggame-1207664593_7_256x256x32.png" "${pkgdir}/usr/share/pixmaps/${_pkgname}-gog.png"
+
+    # Install game data.
+    cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
+
+    # Install desktop file.
+    install -D -m 644 $srcdir/${_pkgname}.desktop \
+             $pkgdir/usr/share/applications/${_pkgname}.desktop
+
+    # Install bash startup script.
+    install -D -m 755 $srcdir/${_pkgname}.sh \
+             $pkgdir/usr/bin/${_pkgname}
+}
