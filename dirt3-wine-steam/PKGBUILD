@@ -13,8 +13,8 @@ pkgdesc="DiRT 3 using WINE with data via Steam"
 license=('custom')
 install=dirt3.install
 url='https://steamdb.info/app/44320/'
-sha256sums=('6a960fef596825ff2f05fa2e8217f6c2e35487de99d6a572d7e88321ae8f7732'
-            '197214032362607eb10eabf02e3382c522c8bec5fd61e72de6180f09f655caa7'
+sha256sums=('70f86e6c3783ce6734576b313ade781a5e2b85654421562d0058f2e73cf73dc1'
+            '39174952df3585de3c2cdd0d3dd89ea22686e639b5a6aebb107832c7ee56572c'
             'ee55665eceef3ca18b5a0bafe269d41cd814e34d572aa1083c4b78b85d5b3958')
 
 prepare() {
@@ -24,7 +24,8 @@ prepare() {
     printf "Enter your Steam username:"
     read steam_username
     steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update 44320 validate" +quit
-    icotool -x -o . ${_pkgname}/*.ico
+    wrestool -x -t -14 -o . ${_pkgname}/${_pkgname}.exe
+    icotool -x -o . *.ico
 }
 
 package() {
@@ -40,7 +41,7 @@ package() {
              $pkgdir/usr/share/applications/${_pkgname}.desktop
 
     # Install icon file.
-    install -D -m 644 $srcdir/dirt3_1_256x256x32.png \
+    install -D -m 644 $srcdir/dirt3.exe_14_MAINICON_0_1_256x256x32.png \
              $pkgdir/usr/share/pixmaps/${_pkgname}.png
 
     # Install bash startup script.
