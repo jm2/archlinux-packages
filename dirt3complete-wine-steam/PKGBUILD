@@ -1,6 +1,6 @@
 # Maintainer: John-Michael Mulesa <jmulesa [at] gmail.com>
 
-pkgname=dirt3-wine-steam
+pkgname=dirt3complete-wine-steam
 _pkgname=dirt3
 pkgver=1.0
 pkgrel=1
@@ -9,12 +9,13 @@ makedepends=('steamcmd' 'icoutils')
 depends=('wine')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
         "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
-pkgdesc="DiRT 3 using WINE with data via Steam"
+pkgdesc="DiRT 3 Complete Edition using WINE with data via Steam"
 license=('custom')
+conflicts=('dirt3-wine-steam')
 install=dirt3.install
 url='https://steamdb.info/app/321040/'
 sha256sums=('70f86e6c3783ce6734576b313ade781a5e2b85654421562d0058f2e73cf73dc1'
-            '39174952df3585de3c2cdd0d3dd89ea22686e639b5a6aebb107832c7ee56572c'
+            '2637145ea2d9d736330fae8207015bc6c231d58f36131898d5e622de8658f92a'
             '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
 
 prepare() {
