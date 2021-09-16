@@ -2,7 +2,7 @@
 
 pkgname=dirtshowdown-wine-steam
 _pkgname=dirtshowdown
-pkgver=1.0
+pkgver=1.2
 pkgrel=1
 _steamid=201700
 arch=('i686' 'x86_64')

@@ -2,7 +2,7 @@
 
 pkgname=dirt3complete-wine-steam
 _pkgname=dirt3
-pkgver=1.0
+pkgver=1.2
 pkgrel=1
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
