@@ -2,21 +2,20 @@
 
 pkgname=dirt3-wine-steam
 _pkgname=dirt3
-pkgver=1.0
+pkgver=1.2
 pkgrel=1
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
 depends=('wine')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
-        "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/download/v4.59/Ultimate-ASI-Loader.zip")
-pkgdesc="DiRT 3 using WINE with data via Steam"
+        "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
+pkgdesc="DiRT 3 Complete Edition using WINE with data via Steam"
 license=('custom')
-conflicts=('dirt3complete-wine-steam')
 install=dirt3.install
-url='https://steamdb.info/app/44320/'
-sha256sums=('70f86e6c3783ce6734576b313ade781a5e2b85654421562d0058f2e73cf73dc1'
-            '39174952df3585de3c2cdd0d3dd89ea22686e639b5a6aebb107832c7ee56572c'
-            'ee55665eceef3ca18b5a0bafe269d41cd814e34d572aa1083c4b78b85d5b3958')
+url='https://steamdb.info/app/321040/'
+sha256sums=('be6a230f3b9ab47988ed51ed5adf400c404c70448a977b929769c54d4974642c'
+            '2637145ea2d9d736330fae8207015bc6c231d58f36131898d5e622de8658f92a'
+            '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
 
 prepare() {
     mkdir -p $srcdir/${_pkgname}
@@ -24,8 +23,8 @@ prepare() {
     # Use steamcmd to get data.
     printf "Enter your Steam username:"
     read steam_username
-    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update 44320 validate" +quit
-    wrestool -x -t -14 -o . ${_pkgname}/${_pkgname}.exe
+    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update 321040 validate" +quit
+    wrestool -x -t -14 -o . ${_pkgname}/${_pkgname}_game.exe
     icotool -x -o . *.ico
 }
 
@@ -34,15 +33,17 @@ package() {
 
     # Move required files to pkgdir
     cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
-    cp $srcdir/dinput8.dll $pkgdir/opt/${_pkgname}/xlive.dll
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
-    
+    $srcdir/linux/tools/find_interfaces.sh $pkgdir/opt/${_pkgname}/steam_api.dll > $pkgdir/opt/${_pkgname}/steam_interfaces.txt || true
+    cp $srcdir/steam_api.dll $pkgdir/opt/${_pkgname}/
+    echo "321040" > $pkgdir/opt/${_pkgname}/steam_appid.txt
+
     # Install desktop file.
     install -D -m 644 $srcdir/${_pkgname}.desktop \
              $pkgdir/usr/share/applications/${_pkgname}.desktop
 
     # Install icon file.
-    install -D -m 644 $srcdir/dirt3.exe_14_MAINICON_0_1_256x256x32.png \
+    install -D -m 644 $srcdir/dirt3_game.exe_14_101_2057_1_256x256x32.png \
              $pkgdir/usr/share/pixmaps/${_pkgname}.png
 
     # Install bash startup script.
