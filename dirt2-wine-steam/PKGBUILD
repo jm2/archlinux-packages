@@ -34,7 +34,8 @@ package() {
     cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
     cp $srcdir/dinput8.dll $pkgdir/opt/${_pkgname}/xlive.dll
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
-    
+    rm $pkgdir/opt/${_pkgname}/*.vdf
+
     # Install desktop file.
     install -D -m 644 $srcdir/${_pkgname}.desktop \
              $pkgdir/usr/share/applications/${_pkgname}.desktop

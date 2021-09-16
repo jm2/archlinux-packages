@@ -35,6 +35,7 @@ package() {
     # Move required files to pkgdir
     cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
+    rm $pkgdir/opt/${_pkgname}/*.vdf
     $srcdir/linux/tools/find_interfaces.sh $pkgdir/opt/${_pkgname}/steam_api64.dll > $pkgdir/opt/${_pkgname}/steam_interfaces.txt || true
     cp $srcdir/steam_api64.dll $pkgdir/opt/${_pkgname}/
     echo "${_steamid}" > $pkgdir/opt/${_pkgname}/steam_appid.txt
