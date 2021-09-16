@@ -14,7 +14,7 @@ license=('custom')
 conflicts=('dirt3-wine-steam')
 install=dirt3.install
 url='https://steamdb.info/app/321040/'
-sha256sums=('70f86e6c3783ce6734576b313ade781a5e2b85654421562d0058f2e73cf73dc1'
+sha256sums=('be6a230f3b9ab47988ed51ed5adf400c404c70448a977b929769c54d4974642c'
             '2637145ea2d9d736330fae8207015bc6c231d58f36131898d5e622de8658f92a'
             '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
 
@@ -25,7 +25,7 @@ prepare() {
     printf "Enter your Steam username:"
     read steam_username
     steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update 321040 validate" +quit
-    wrestool -x -t -14 -o . ${_pkgname}/${_pkgname}.exe
+    wrestool -x -t -14 -o . ${_pkgname}/${_pkgname}_game.exe
     icotool -x -o . *.ico
 }
 
@@ -44,7 +44,7 @@ package() {
              $pkgdir/usr/share/applications/${_pkgname}.desktop
 
     # Install icon file.
-    install -D -m 644 $srcdir/dirt3.exe_14_MAINICON_0_1_256x256x32.png \
+    install -D -m 644 $srcdir/dirt3_game.exe_14_101_2057_1_256x256x32.png \
              $pkgdir/usr/share/pixmaps/${_pkgname}.png
 
     # Install bash startup script.

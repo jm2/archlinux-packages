@@ -6,4 +6,4 @@ if [ ! -d "$HOME"/.dirt3 ] ; then
    winetricks dxvk
 fi
 cd /opt/dirt3
-/usr/bin/wine dirt3.exe
+/usr/bin/wine dirt3_game.exe
