@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GRID 2
+Comment=GRID 2 WINE
+Exec=/usr/bin/grid2
+Icon=grid2
+Terminal=false
+Type=Application
+Categories=Application;Game;
