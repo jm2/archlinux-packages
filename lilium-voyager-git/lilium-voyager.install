@@ -6,7 +6,7 @@ post_install() {
     echo ">>>      /opt/lilium-voyager/baseEF/"
     echo ">>>"
     echo ">>> When you have the .pk3 file(s) installed, run the game:"
-    echo ">>>      lilium-voyager"
+    echo ">>>      liliumvoyhm"
     echo ">>>"
 }
 
