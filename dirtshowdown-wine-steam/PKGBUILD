@@ -3,19 +3,21 @@
 pkgname=dirtshowdown-wine-steam
 _pkgname=dirtshowdown
 pkgver=1.2
-pkgrel=1
+pkgrel=2
 _steamid=201700
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
 depends=('wine' 'winetricks')
-source=("${_pkgname}.sh" "${_pkgname}.desktop"
+source=("${_pkgname}.sh" "${_pkgname}.desktop" "${_pkgname#dirt}.exe" "${_pkgname#dirt}_avx.exe"
         "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
 pkgdesc="DiRT Showdown using WINE with data via Steam"
 license=('custom')
 install=dirtshowdown.install
 url='https://steamdb.info/app/201700/'
-sha256sums=('0c229b1dbc83dc966c6fb92493b2780c7b1883b0ade39f8601e89ed1d93f6d6f'
+sha256sums=('a97428269726324ecb4107e6bc8cb44a651edc6d23d935ad78a9523660e38729'
             '836e67420ef664f6d917e3c68a4e8c4b07195893d2375486282b4d92a2e9b59b'
+            '80b9b3bc95f2e1a3c1f8a183c32bb911f1dbbb662f4e09071c0f6d70b536a9e2'
+            'a62e1cb44020951d38ee4ab3c49a25fe76c77d9defd42661b81292d9ce495b7f'
             '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
 
 prepare() {
@@ -38,6 +40,7 @@ package() {
     rm $pkgdir/opt/${_pkgname}/*.vdf
     $srcdir/linux/tools/find_interfaces.sh $pkgdir/opt/${_pkgname}/steam_api.dll > $pkgdir/opt/${_pkgname}/steam_interfaces.txt || true
     cp $srcdir/steam_api.dll $pkgdir/opt/${_pkgname}/
+    cp $srcdir/${_pkgname#dirt}{,_avx}.exe $pkgdir/opt/${_pkgname}/
     echo "${_steamid}" > $pkgdir/opt/${_pkgname}/steam_appid.txt
 
     # Install desktop file.

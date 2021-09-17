@@ -2,20 +2,22 @@
 
 pkgname=grid2-wine-steam
 _pkgname=grid2
-pkgver=1.0
+pkgver=1.0.85
 pkgrel=1
 _steamid=44350
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
 depends=('wine' 'winetricks')
-source=("${_pkgname}.sh" "${_pkgname}.desktop"
+source=("${_pkgname}.sh" "${_pkgname}.desktop" "${_pkgname}.exe" "${_pkgname}_avx.exe"
         "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
-pkgdesc="GRID 2 using WINE with data via Steam"
+pkgdesc="GRID 2 Reloaded Edition using WINE with data via Steam"
 license=('custom')
 install=grid2.install
 url='https://steamdb.info/app/44350/'
-sha256sums=('3162fe658e7c606dbee1eb4843b4ecd2e7337ff5db65a0c4c892d1b5798ff8c5'
+sha256sums=('7458ac00f76e8b56206d06cf47d814e1b64772d402875a2e05f553b78ab4d01f'
             'd34065e56a9009ac09d9bc09fe4121024a4de46ab4a80c45b7e76c15e0169633'
+            'd8ec0c631b453d6e5e9adebae4cfc9b612823fec316344c28544bc65245ba35d'
+            '825f30a49a668870c7bfab0309c3afb01a396fc1cec0be8df9764e32bf2fb53f'
             '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
 
 prepare() {
@@ -37,6 +39,7 @@ package() {
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
     $srcdir/linux/tools/find_interfaces.sh $pkgdir/opt/${_pkgname}/steam_api64.dll > $pkgdir/opt/${_pkgname}/steam_interfaces.txt || true
     cp $srcdir/steam_api.dll $pkgdir/opt/${_pkgname}/
+    cp $srcdir/${_pkgname}{,_avx}.exe $pkgdir/opt/${_pkgname}/
     echo "${_steamid}" > $pkgdir/opt/${_pkgname}/steam_appid.txt
 
     # Install desktop file.

@@ -6,4 +6,4 @@ if [ ! -d "$HOME"/.grid2 ] ; then
    winetricks dxvk
 fi
 cd /opt/grid2
-/usr/bin/wine grid2.exe
+/usr/bin/wine grid2_avx.exe

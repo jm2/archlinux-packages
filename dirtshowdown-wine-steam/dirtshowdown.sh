@@ -6,4 +6,4 @@ if [ ! -d "$HOME"/.dirtshowdown ] ; then
    winetricks dxvk
 fi
 cd /opt/dirtshowdown
-/usr/bin/wine showdown.exe
+/usr/bin/wine showdown_avx.exe
