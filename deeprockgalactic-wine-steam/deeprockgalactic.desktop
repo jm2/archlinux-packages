@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Deep Rock Galactic
-Comment=Deep Rock Galactic WINE
-Exec=/usr/bin/deeprockgalactic
-Icon=deeprockgalactic
-Terminal=false
-Type=Application
-Categories=Application;Game;
