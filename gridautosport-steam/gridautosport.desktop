@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GRID Autosport
+Comment=GRID Autosport Linux-native
+Exec=/usr/bin/gridautosport
+Icon=gridautosport
+Terminal=false
+Type=Application
+Categories=Application;Game;
