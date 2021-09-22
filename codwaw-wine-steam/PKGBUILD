@@ -1,22 +1,23 @@
 # Maintainer: John-Michael Mulesa <jmulesa [at] gmail.com>
 
-pkgname=wreckfest-wine-steam
-_pkgname=wreckfest
-pkgver=1.27
+pkgname=codwaw-wine-steam
+_pkgname=codwaw
+pkgver=1.7
 pkgrel=1
-_steamid=228380
+_steamid=10090
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
-depends=('wine' 'winetricks')
+depends=('wine')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
-        "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
-pkgdesc="Wreckfest using WINE with data via Steam"
+        "https://github.com/jm2/archlinux-package-codwaw-wine-steam/raw/master/CoDWaW.exe"
+        "https://github.com/jm2/archlinux-package-codwaw-wine-steam/raw/master/CoDWaWmp.exe")
+pkgdesc="Call of Duty: World at War using WINE with data via Steam"
 license=('custom')
-install=wreckfest.install
-url='https://store.steampowered.com/app/228380/Wreckfest/'
-sha256sums=('2a461d48a57b449b223bfd4c5113e2c471bd249cf1777130d57ba75503bd18dc'
-            'b794e5f02c2346e977cb5a5c5ecd8963daf12d10d7c54a84676e20ad199b7941'
-            '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
+url='https://store.steampowered.com/app/10090/Call_of_Duty_World_at_War/'
+sha256sums=('84437aa7bf7baf82596c636d0a026933ee9197e67efd2887de59fb03c5aa8715'
+            'd3f8517b127a1cb03e991d963c40df17bbe6de57f5e8a662fbc6598e43e797db'
+            'f751d06799ed27f30c61d157ed292aa3adce73fbf9c30b92a5657b29624e8b31'
+            'b0e265592901cd248b7358e8b37c8c1b5c85c6b24fb3cb378f62d601378e4fae')
 
 prepare() {
     mkdir -p $srcdir/${_pkgname}
@@ -25,7 +26,7 @@ prepare() {
     printf "Enter your Steam username:"
     read steam_username
     steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update ${_steamid} validate" +quit
-    wrestool -x -t -14 -o . ${_pkgname}/Wreckfest.exe
+    wrestool -x -t -14 -o . ${_pkgname}/CoDWaW.exe
     icotool -x -o . *.ico
 }
 
@@ -34,19 +35,19 @@ package() {
 
     # Move required files to pkgdir
     cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
+    cp $srcdir/CoDWaW{,mp}.exe $pkgdir/opt/${_pkgname}/
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
     rm $pkgdir/opt/${_pkgname}/*.vdf
-    $srcdir/linux/tools/find_interfaces.sh $pkgdir/opt/${_pkgname}/steam_api64.dll > $pkgdir/opt/${_pkgname}/steam_interfaces.txt || true
-    cp $srcdir/steam_api64.dll $pkgdir/opt/${_pkgname}/
-    cp $srcdir/steam_api.dll $pkgdir/opt/${_pkgname}/
-    echo "${_steamid}" > $pkgdir/opt/${_pkgname}/steam_appid.txt
+    
+    # Required for player profiles.
+    chmod o+w $pkgdir/opt/${_pkgname}
 
     # Install desktop file.
     install -D -m 644 $srcdir/${_pkgname}.desktop \
              $pkgdir/usr/share/applications/${_pkgname}.desktop
 
     # Install icon file.
-    install -D -m 644 $srcdir/Wreckfest.exe_*_256x256x32.png \
+    install -D -m 644 $srcdir/CoDWaW.exe_14_ID_ICON1_1024_5_256x256x24.png \
              $pkgdir/usr/share/pixmaps/${_pkgname}.png
 
     # Install bash startup script.

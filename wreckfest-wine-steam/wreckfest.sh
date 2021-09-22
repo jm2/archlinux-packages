@@ -6,7 +6,7 @@ if [ ! -d "$HOME"/.wreckfest ] ; then
    winetricks dxvk
 fi
 cd /opt/wreckfest
-while getopts ":lm" opt; do
+while getopts ":lmh" opt; do
   case ${opt} in
     l ) /usr/bin/wine Wreckfest.exe
       ;;

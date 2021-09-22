@@ -6,7 +6,7 @@ if [ ! -d "$HOME"/.aoe3 ] ; then
    winetricks courier mfc42 d9vk
 fi
 cd /opt/aoe3
-while getopts ":oxy" opt; do
+while getopts ":oxyh" opt; do
   case ${opt} in
     o ) /usr/bin/wine age3.exe +noIntroCinematics
       ;;
