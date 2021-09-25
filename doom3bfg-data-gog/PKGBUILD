@@ -5,7 +5,7 @@ pkgname=doom3bfg-data-gog
 _pkgname=doom3bfg
 pkgver=1
 _pkgver="1.14_(13452)"
-pkgrel=2
+pkgrel=1
 pkgdesc="Doom 3 BFG data via GOG"
 arch=('any')
 url="https://www.gog.com/game/doom_3_bfg_edition"
@@ -14,8 +14,8 @@ makedepends=('innoextract' 'icoutils')
 provides=('doom3bfg-data')
 conflicts=('doom3bfg-data-steam')
 source=("setup_doom_3_bfg_${_pkgver}.exe::gogdownloader://doom_3_bfg_edition_game/en1installer0" "setup_doom_3_bfg_${_pkgver}-1.bin::gogdownloader://doom_3_bfg_edition_game/en1installer1")
-sha256sums=('4d09d3d11fca9d5122fc9af9aa12b8701742940b393b9bf63a4d9cdd825c4135'
-            '9d163dbf728f8e2c00d26ac8de29a8b8e3bf1111d45ab320dea6371aaedd32eb')
+sha256sums=('8e6796c0f81e90de726e57978858ebdc8e162366060736bb080a51c73151936f'
+            'e71a1f1cf2674748046b677b88015a4807a624a14831a2e7ce1e084c82bd0952')
 
 # If you want to use lgogdownloader add the following to /etc/makepkg.conf
 # DLAGENTS+=('gogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
@@ -30,7 +30,7 @@ package() {
     mkdir -p $pkgdir/opt/${_pkgname}/base
 
     # install game icon
-    install -Dm644 "${srcdir}/goggame-1836059896_7_128x128x32.png" "${pkgdir}/usr/share/pixmaps/${_pkgname}-gog.png"
+    install -Dm644 "${srcdir}/goggame-1135892318_7_128x128x32.png" "${pkgdir}/usr/share/pixmaps/${_pkgname}-gog.png"
 
     # copy data structure
     cp -r $srcdir/app/base/* $pkgdir/opt/${_pkgname}/base/

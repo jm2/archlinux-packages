@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=DOOM (2016)
+Comment=DOOM (2016) WINE
+Exec=/usr/bin/doom2016
+Icon=doom2016
+Terminal=false
+Type=Application
+Categories=Application;Game;
