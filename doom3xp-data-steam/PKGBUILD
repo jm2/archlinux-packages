@@ -1,18 +1,17 @@
 # Maintainer: John-Michael Mulesa <jmulesa [at] gmail.com>
 # Contributor: Sebastian Gsänger <sebastian_gsaenger [at] web.de>
 
-pkgname=quake4-data-steam
-_pkgname=quake4
+pkgname=doom3xp-data-steam
+_pkgname=doom3
 pkgver=1
 pkgrel=1
-_steamid=2210
+_steamid=9070
 arch=('any')
 makedepends=('steamcmd')
-pkgdesc="Quake 4 data via Steam"
+pkgdesc="Doom 3 Expansion data via Steam"
 license=('custom')
-provides=('quake4-data')
-conflicts=('quake4-data-gog')
-url='https://store.steampowered.com/app/2210/Quake_IV/'
+provides=('doom3xp-data')
+url='https://store.steampowered.com/app/9070/DOOM_3_Resurrection_of_Evil/'
 
 prepare() {
     mkdir -p $srcdir/${_pkgname}
@@ -24,9 +23,8 @@ prepare() {
 }
 
 package() {
-    mkdir -p $pkgdir/opt/${_pkgname}/q4base
+    mkdir -p $pkgdir/opt/${_pkgname}/d3xp
 
     # Move required files to pkgdir
-    install -D -m 644 $srcdir/${_pkgname}/q4base/pak0{01..12}.pk4 $pkgdir/opt/${_pkgname}/q4base/
-    install -D -m 644 $srcdir/${_pkgname}/q4base/zpak*h.pk4 $pkgdir/opt/${_pkgname}/q4base/
+    install -D -m 644 $srcdir/${_pkgname}/d3xp/*.pk4 $pkgdir/opt/${_pkgname}/d3xp/
 }

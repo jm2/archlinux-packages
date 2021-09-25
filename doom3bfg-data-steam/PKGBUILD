@@ -1,18 +1,18 @@
 # Maintainer: John-Michael Mulesa <jmulesa [at] gmail.com>
 # Contributor: Sebastian Gsänger <sebastian_gsaenger [at] web.de>
 
-pkgname=quake4-data-steam
-_pkgname=quake4
+pkgname=doom3bfg-data-steam
+_pkgname=doom3bfg
 pkgver=1
 pkgrel=1
-_steamid=2210
+_steamid=208200
 arch=('any')
 makedepends=('steamcmd')
-pkgdesc="Quake 4 data via Steam"
+pkgdesc="Doom 3 BFG data via Steam"
 license=('custom')
-provides=('quake4-data')
-conflicts=('quake4-data-gog')
-url='https://store.steampowered.com/app/2210/Quake_IV/'
+provides=('doom3bfg-data')
+conflicts=('doom3bfg-data-gog')
+url='https://store.steampowered.com/app/208200/Doom_3_BFG_Edition/'
 
 prepare() {
     mkdir -p $srcdir/${_pkgname}
@@ -24,9 +24,8 @@ prepare() {
 }
 
 package() {
-    mkdir -p $pkgdir/opt/${_pkgname}/q4base
+    mkdir -p $pkgdir/opt/${_pkgname}/base
 
     # Move required files to pkgdir
-    install -D -m 644 $srcdir/${_pkgname}/q4base/pak0{01..12}.pk4 $pkgdir/opt/${_pkgname}/q4base/
-    install -D -m 644 $srcdir/${_pkgname}/q4base/zpak*h.pk4 $pkgdir/opt/${_pkgname}/q4base/
+    cp -r $srcdir/${_pkgname}/base/* $pkgdir/opt/${_pkgname}/base/
 }
