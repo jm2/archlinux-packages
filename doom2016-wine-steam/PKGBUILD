@@ -8,13 +8,15 @@ _steamid=379720
 arch=('x86_64')
 makedepends=('steamcmd' 'icoutils')
 depends=('wine')
-source=("${_pkgname}.sh" "${_pkgname}.desktop"
+source=("${_pkgname}.sh" "${_pkgname}.desktop" "DOOMx64.exe" "DOOMx64vk.exe"
         "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
 pkgdesc="DOOM (2016) using WINE with data via Steam"
 license=('custom')
 url='https://store.steampowered.com/app/379720/DOOM/'
-sha256sums=('e85f92d309757b7452a25fd75284fb181f1d6e373d655f35665e38aba51b5bd6'
+sha256sums=('d529beb9d23e60a5bd1c003789925dcb21e4ee3ad38ee64e4e20d762b1c4b4e7'
             'a9c07dc61d0bdbf2c750ea5deebea03ef7cd8ea0c927202382c4862f1cbc4861'
+            'e2df876c91c143f1efd10e64ff8bd19db865ac84ee0bd4c727dbe69da2377e8e'
+            '99529e881dfb42c04a3910f8901a716aee36c6cfcd0b0e03ae1a511f68040157'
             '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
 
 prepare() {
@@ -37,6 +39,7 @@ package() {
     $srcdir/linux/tools/find_interfaces.sh $pkgdir/opt/${_pkgname}/steam_api64.dll > $pkgdir/opt/${_pkgname}/steam_interfaces.txt || true
     cp $srcdir/steam_api64.dll $pkgdir/opt/${_pkgname}/
     echo "${_steamid}" > $pkgdir/opt/${_pkgname}/steam_appid.txt
+    cp $srcdir/DOOMx64{,vk}.exe $pkgdir/opt/${_pkgname}/
 
     # Install desktop file.
     install -D -m 644 $srcdir/${_pkgname}.desktop \
