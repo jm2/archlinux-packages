@@ -41,6 +41,9 @@ package() {
     echo "${_steamid}" > $pkgdir/opt/${_pkgname}/steam_appid.txt
     cp $srcdir/s1x.exe $pkgdir/opt/${_pkgname}/ 
 
+    # Required for player profiles.
+    chmod o+w $pkgdir/opt/${_pkgname}
+
     # Install desktop file.
     install -D -m 644 $srcdir/${_pkgname}.desktop \
              $pkgdir/usr/share/applications/${_pkgname}.desktop
