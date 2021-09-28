@@ -6,4 +6,19 @@ if [ ! -d "$HOME"/.codaw ] ; then
    winetricks dxvk
 fi
 cd /opt/codaw
-/usr/bin/wine s1x.exe
+while getopts ":dszmh" opt; do
+  case ${opt} in
+    d ) /usr/bin/wine s1x.exe -dedicated
+      ;;
+    s ) /usr/bin/wine s1x.exe -survival
+      ;;
+    z ) /usr/bin/wine s1x.exe -zombies
+      ;;
+    m ) /usr/bin/wine s1x.exe -multiplayer
+      ;;
+    h ) echo "Usage: codaw [-z: zombies|-m: multiplayer (default)|-s: survival|-d: dedicated]"
+      ;;
+  esac
+  exit
+done
+/usr/bin/wine s1x.exe -multiplayer

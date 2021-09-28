@@ -13,7 +13,7 @@ source=("${_pkgname}.sh" "${_pkgname}.desktop" "https://github.com/XLabsProject/
 pkgdesc="Call of Duty: Advanced Warfare using WINE with data via Steam"
 license=('custom')
 url='https://store.steampowered.com/app/209650/Call_of_Duty_Advanced_Warfare__Gold_Edition/'
-sha256sums=('0fa361a8a25b19e41caf820821d17314a1d8a5e0e224ed0051d9fb1af45344f8'
+sha256sums=('9f839f1cbf2bc36ca65f962dacc024692d7c3dbbc8a112920e513c9fa7133318'
             'a696a2148946a4278bc40ee237d0a3cf702c785f27893f4ec145d18291e2dd77'
             '4808a884caddacdd0d53a6b075e649181485bb71e7263bd2556903f554fdcf85'
             '3bfe422a3daf85a02fe6458e4351a4f40f29f513ec8df2c838c7e197844e51cb')
