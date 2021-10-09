@@ -2,7 +2,7 @@
 
 pkgname=wreckfest-wine-steam
 _pkgname=wreckfest
-pkgver=1.27
+pkgver=1.28
 pkgrel=1
 _steamid=228380
 arch=('i686' 'x86_64')
