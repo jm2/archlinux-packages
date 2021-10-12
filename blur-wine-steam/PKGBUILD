@@ -1,0 +1,46 @@
+# Maintainer: John-Michael Mulesa <jmulesa [at] gmail.com>
+
+pkgname=blur-wine-steam
+_pkgname=blur
+pkgver=1.2
+pkgrel=1
+arch=('i686' 'x86_64')
+_steamid=42640
+makedepends=('steamcmd')
+depends=('wine')
+source=("${_pkgname}.sh" "${_pkgname}.desktop" "${_pkgname}.png")
+pkgdesc="Blur using WINE with data via Steam"
+license=('custom')
+url='https://steamdb.info/app/42640/'
+sha256sums=('5e4775e81a3e0ca0080f5ffa5699608eb21e574ec45f4507c47eed34a552044a'
+            'f1812921e33d1547a38bbaafcba8efc8bfba015b8e8c5aed3d2589066ad0d45f'
+            '76bf2a1e36d7231d8dce0802244f41b0534b993487f5c90713e684e678fc0c31')
+
+prepare() {
+    mkdir -p $srcdir/${_pkgname}
+
+    # Use steamcmd to get data.
+    printf "Enter your Steam username:"
+    read steam_username
+    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update ${_steamid} validate" +quit
+}
+
+package() {
+    mkdir -p $pkgdir/opt/${_pkgname}
+
+    # Move required files to pkgdir
+    cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
+    rm -rf $pkgdir/opt/${_pkgname}/steamapps
+
+    # Install desktop file.
+    install -D -m 644 $srcdir/${_pkgname}.desktop \
+             $pkgdir/usr/share/applications/${_pkgname}.desktop
+
+    # Install icon file.
+    install -D -m 644 $srcdir/${_pkgname}.png \
+             $pkgdir/usr/share/pixmaps/${_pkgname}.png
+
+    # Install bash startup script.
+    install -D -m 755 $srcdir/${_pkgname}.sh \
+             $pkgdir/usr/bin/${_pkgname}
+}

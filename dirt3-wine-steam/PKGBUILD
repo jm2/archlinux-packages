@@ -5,6 +5,7 @@ _pkgname=dirt3
 pkgver=1.2
 pkgrel=1
 arch=('i686' 'x86_64')
+_steamid=321040
 makedepends=('steamcmd' 'icoutils')
 depends=('wine' 'winetricks')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
@@ -23,7 +24,7 @@ prepare() {
     # Use steamcmd to get data.
     printf "Enter your Steam username:"
     read steam_username
-    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update 321040 validate" +quit
+    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update ${_steamid} validate" +quit
     wrestool -x -t -14 -o . ${_pkgname}/${_pkgname}_game.exe
     icotool -x -o . *.ico
 }
@@ -36,14 +37,14 @@ package() {
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
     $srcdir/linux/tools/find_interfaces.sh $pkgdir/opt/${_pkgname}/steam_api.dll > $pkgdir/opt/${_pkgname}/steam_interfaces.txt || true
     cp $srcdir/steam_api.dll $pkgdir/opt/${_pkgname}/
-    echo "321040" > $pkgdir/opt/${_pkgname}/steam_appid.txt
+    echo "${_steamid}" > $pkgdir/opt/${_pkgname}/steam_appid.txt
 
     # Install desktop file.
     install -D -m 644 $srcdir/${_pkgname}.desktop \
              $pkgdir/usr/share/applications/${_pkgname}.desktop
 
     # Install icon file.
-    install -D -m 644 $srcdir/dirt3_game.exe_14_101_2057_1_256x256x32.png \
+    install -D -m 644 $srcdir/${_pkgname}_game.exe_*_256x256x32.png \
              $pkgdir/usr/share/pixmaps/${_pkgname}.png
 
     # Install bash startup script.

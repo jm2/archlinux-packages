@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Split/Second
+Comment=Split/Second WINE
+Exec=/usr/bin/splitsecond
+Icon=splitsecond
+Terminal=false
+Type=Application
+Categories=Application;Game;
