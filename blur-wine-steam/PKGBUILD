@@ -8,13 +8,14 @@ arch=('i686' 'x86_64')
 _steamid=42640
 makedepends=('steamcmd')
 depends=('wine')
-source=("${_pkgname}.sh" "${_pkgname}.desktop" "${_pkgname}.png")
+source=("${_pkgname}.sh" "${_pkgname}.desktop" "${_pkgname}.png" "Blur.exe.unpacked.exe")
 pkgdesc="Blur using WINE with data via Steam"
 license=('custom')
 url='https://steamdb.info/app/42640/'
 sha256sums=('5e4775e81a3e0ca0080f5ffa5699608eb21e574ec45f4507c47eed34a552044a'
             'f1812921e33d1547a38bbaafcba8efc8bfba015b8e8c5aed3d2589066ad0d45f'
-            '76bf2a1e36d7231d8dce0802244f41b0534b993487f5c90713e684e678fc0c31')
+            '76bf2a1e36d7231d8dce0802244f41b0534b993487f5c90713e684e678fc0c31'
+            'ba3df874a8b0084a8f038fb9550615f18c85d489a72caf4df035722ff2430324')
 
 prepare() {
     mkdir -p $srcdir/${_pkgname}
@@ -31,6 +32,7 @@ package() {
     # Move required files to pkgdir
     cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
+    cp $srcdir/Blur.exe.unpacked.exe $pkgdir/opt/${_pkgname}/Blur.exe 
 
     # Install desktop file.
     install -D -m 644 $srcdir/${_pkgname}.desktop \

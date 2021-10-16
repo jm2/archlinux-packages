@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Warcraft III: Frozen Throne
+Comment=Warcraft III Classic WINE
+Exec=/usr/bin/warcraft3
+Icon=warcraft3
+Terminal=false
+Type=Application
+Categories=Application;Game;
