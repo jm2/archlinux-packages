@@ -21,7 +21,7 @@ sha256sums=('SKIP'
 
 prepare() {
   cd $srcdir/Q2RTX
-  git checkout tags/v1.5.0
+  git checkout tags/v${pkgver}
   git submodule update --init --recursive
   mkdir -p $srcdir/Q2RTX/{build,baseq2}
   cp -rf $srcdir/q2rtx/baseq2/* $srcdir/Q2RTX/baseq2/
