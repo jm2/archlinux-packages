@@ -22,7 +22,10 @@ sha256sums=('SKIP'
 prepare() {
   cd $srcdir/Q2RTX
   git checkout tags/v${pkgver}
+  sed -i 's/spurious\/SDL-mirror/libsdl-org\/SDL/' .gitmodules .git/config
   git submodule update --init --recursive
+  rm -rf extern/SDL2
+  git submodule update --init --recursive --remote --merge extern/SDL2
   mkdir -p $srcdir/Q2RTX/{build,baseq2}
   cp -rf $srcdir/q2rtx/baseq2/* $srcdir/Q2RTX/baseq2/
 }
