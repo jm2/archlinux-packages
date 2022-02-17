@@ -11,7 +11,8 @@ arch=('x86_64')
 url="https://bitbucket.org/daikatana13/daikatana"
 license=('custom')
 makedepends=('innoextract' 'icoutils')
-optdepends=('daikatana-data-gog: Game data/icon files')
+optdepends=('daikatana-data-gog: game data files from GOG'
+            'daikatana-data-steam: game data files from Steam')
 provides=('daikatana')
 source=("daikatana.desktop"
 "https://bitbucket.org/daikatana13/daikatana/downloads/Daikatana-Linux-2021-12-20-x64.tar.bz2"
@@ -19,7 +20,7 @@ source=("daikatana.desktop"
 "http://dk.toastednet.org/DK13/pak5.zip"
 "http://dk.toastednet.org/Maps/pak9.zip"
 "http://dk.toastednet.org/Music/Daikatana_OGG_music.zip")
-sha256sums=('e94c64deefc638534ea3d828281f7f9ee99e621595aa4a05c44d74b15a873146'
+sha256sums=('0fe4bc3bcbc7e30065aefb563112f6e30dc0775a84a613c4495a89edfa8f2995'
             'e2ef9991dc5755c578587dd02c10724133046a544d38a6dba23cb28ce8bac02e'
             '81ff9e2b8e5cf176ba6c3b714d2aa4c0c2abb41a1ee7fdfe623eb2e1d5798a53'
             '39d1cab035340724f990372e51ee332323a9b9c6aead5c46f988559aa6a631cb'

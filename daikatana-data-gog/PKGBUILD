@@ -27,7 +27,7 @@ prepare() {
 
 package() {
     # install game icon
-    install -Dm644 "${srcdir}/goggame-1207659168_7_256x256x32.png" "${pkgdir}/usr/share/pixmaps/${_pkgname}-gog.png"
+    install -Dm644 "${srcdir}/goggame-1207659168_7_256x256x32.png" "${pkgdir}/usr/share/pixmaps/${_pkgname}.png"
 
     mkdir -p "${pkgdir}/opt/${_pkgname}/data"
 
