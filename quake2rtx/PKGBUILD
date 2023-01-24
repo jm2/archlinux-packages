@@ -8,26 +8,27 @@ url="https://github.com/NVIDIA/Q2RTX"
 license=('GPL')
 groups=()
 depends=(zlib curl sdl2 vulkan-headers vulkan-driver)
-makedepends=(git cmake)
+makedepends=(git cmake stb)
 checkdepends=()
 optdepends=()
 provides=('quake2rtx')
 conflicts=('quake2rtx-bin')
 replaces=()
 source=("git+https://github.com/NVIDIA/Q2RTX.git"
-        "https://github.com/NVIDIA/Q2RTX/releases/download/v${pkgver}/q2rtx-${pkgver}-linux.tar.gz")
+        "https://github.com/NVIDIA/Q2RTX/releases/download/v${pkgver}/q2rtx-${pkgver}-linux.tar.gz"
+        "https://raw.githubusercontent.com/syoyo/tinyobjloader-c/46d333d0165427b22895d05e278736bc9ef84365/tinyobj_loader_c.h")
 sha256sums=('SKIP'
-            'd2c8218b8d0e232a23f05b4b4a83097d28d53291584ef850bb79de8b888aa3b4')
+            'd2c8218b8d0e232a23f05b4b4a83097d28d53291584ef850bb79de8b888aa3b4'
+            'f848f01823742ad200177e3977aba7909a5eb4d8cef635db51d792e5353cff38')
 
 prepare() {
-  cd $srcdir/Q2RTX
+  cd "${srcdir}/Q2RTX"
   git checkout tags/v${pkgver}
-  sed -i 's/spurious\/SDL-mirror/libsdl-org\/SDL/' .gitmodules .git/config
-  git submodule update --init --recursive
-  rm -rf extern/SDL2
-  git submodule update --init --recursive --remote --merge extern/SDL2
-  mkdir -p $srcdir/Q2RTX/{build,baseq2}
-  cp -rf $srcdir/q2rtx/baseq2/* $srcdir/Q2RTX/baseq2/
+  sed -i 's/add_subdirectory(extern)/include_directories("\/usr\/include\/stb" "\/usr\/include\/SDL2")/' CMakeLists.txt
+  rm -rf extern
+  cp "${srcdir}/tinyobj_loader_c.h" "${srcdir}/Q2RTX/src"
+  mkdir -p ${srcdir}/Q2RTX/{build,baseq2}
+  cp -rf ${srcdir}/q2rtx/baseq2/* ${srcdir}/Q2RTX/baseq2/
 }
 
 build() {
