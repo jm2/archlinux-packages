@@ -3,7 +3,7 @@ export WINEPREFIX="$HOME"/.codghosts/wine
 if [ ! -d "$HOME"/.codghosts ] ; then
    mkdir -p "$HOME"/.codghosts/wine
    wineboot -u
-   winetricks dxvk
+   setup_dxvk install --symlink
 fi
 cd /opt/codghosts
 while getopts ":dmh" opt; do
