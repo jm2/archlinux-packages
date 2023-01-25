@@ -7,7 +7,7 @@ pkgrel=2
 _steamid=201700
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
-depends=('wine' 'dxvk')
+depends=('wine' 'dxvk' 'mingw-w64-openal')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
         "https://github.com/jm2/archlinux-package-dirtshowdown-wine-steam/raw/master/${_pkgname#dirt}.exe"
         "https://github.com/jm2/archlinux-package-dirtshowdown-wine-steam/raw/master/${_pkgname#dirt}_avx.exe"
