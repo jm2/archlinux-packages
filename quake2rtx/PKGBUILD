@@ -19,7 +19,7 @@ source=("git+https://github.com/NVIDIA/Q2RTX.git"
         "https://raw.githubusercontent.com/syoyo/tinyobjloader-c/46d333d0165427b22895d05e278736bc9ef84365/tinyobj_loader_c.h")
 sha256sums=('SKIP'
             'd2c8218b8d0e232a23f05b4b4a83097d28d53291584ef850bb79de8b888aa3b4'
-            'f848f01823742ad200177e3977aba7909a5eb4d8cef635db51d792e5353cff38')
+            '550df12e11ab9acd9ff2942fd199ebd60a2fda826b573af83a096c535bd0f8e7')
 
 prepare() {
   cd "${srcdir}/Q2RTX"
