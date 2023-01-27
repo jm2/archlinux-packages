@@ -7,7 +7,7 @@ pkgrel=1
 _steamid=209170
 arch=('x86_64')
 makedepends=('steamcmd' 'icoutils')
-depends=('wine' 'dxvk')
+depends=('wine' 'winetricks')
 source=("${_pkgname}.sh" "${_pkgname}.desktop" "https://github.com/XLabsProject/iw6x-client/releases/download/v2.0.2/iw6x-v2.0.2.zip"
         "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
 pkgdesc="Call of Duty: Ghosts using WINE with data via Steam"
