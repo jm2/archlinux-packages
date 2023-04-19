@@ -1,6 +1,6 @@
 # Maintainer: John-Michael Mulesa <jmulesa@gmail.com>
 pkgname=quake2rtx
-pkgver=1.6.0
+pkgver=1.7.0
 pkgrel=1
 pkgdesc="Ray-traced version of Quake II."
 arch=(x86_64 aarch64)
@@ -8,31 +8,27 @@ url="https://github.com/NVIDIA/Q2RTX"
 license=('GPL')
 groups=()
 depends=(zlib curl sdl2 vulkan-headers vulkan-driver)
-makedepends=(git cmake stb)
+makedepends=(git cmake)
 checkdepends=()
 optdepends=()
 provides=('quake2rtx')
 conflicts=('quake2rtx-bin')
 replaces=()
 source=("git+https://github.com/NVIDIA/Q2RTX.git"
-        "https://github.com/NVIDIA/Q2RTX/releases/download/v${pkgver}/q2rtx-${pkgver}-linux.tar.gz"
-        "https://raw.githubusercontent.com/syoyo/tinyobjloader-c/46d333d0165427b22895d05e278736bc9ef84365/tinyobj_loader_c.h")
+        "https://github.com/NVIDIA/Q2RTX/releases/download/v${pkgver}/q2rtx-${pkgver}-linux.tar.gz")
 sha256sums=('SKIP'
-            'd2c8218b8d0e232a23f05b4b4a83097d28d53291584ef850bb79de8b888aa3b4'
-            '550df12e11ab9acd9ff2942fd199ebd60a2fda826b573af83a096c535bd0f8e7')
+            '7309ad2f2d062275c651a5c0fc0552427682215a8099472e4778cb61517290f3')
 
 prepare() {
   cd "${srcdir}/Q2RTX"
   git checkout tags/v${pkgver}
-  sed -i 's/add_subdirectory(extern)/include_directories("\/usr\/include\/stb" "\/usr\/include\/SDL2")/' CMakeLists.txt
-  rm -rf extern
-  cp "${srcdir}/tinyobj_loader_c.h" "${srcdir}/Q2RTX/src"
+  git submodule update --init --recursive
   mkdir -p ${srcdir}/Q2RTX/{build,baseq2}
   cp -rf ${srcdir}/q2rtx/baseq2/* ${srcdir}/Q2RTX/baseq2/
 }
 
 build() {
-  cd $srcdir/Q2RTX/build
+  cd "${srcdir}/Q2RTX/build"
   cmake ..
   cmake --build .
 }
@@ -47,9 +43,9 @@ package() {
   install -Dm755 "${srcdir}/q2rtx/q2rtx.sh" "${pkgdir}/usr/bin/q2rtx"
   install -Dm755 "${srcdir}/q2rtx/find-retail-paks.sh" "${pkgdir}/usr/bin/${pkgname}-find-retail-paks"
   install -Dm644 \
-    "${srcdir}/q2rtx/q2rtx.png" \
+    "${srcdir}/Q2RTX/setup/q2rtx.png" \
     "${pkgdir}/usr/share/pixmaps/q2rtx.png"
   install -Dm644 \
-    "${srcdir}/q2rtx/q2rtx.desktop" \
+    "${srcdir}/Q2RTX/setup/q2rtx.desktop" \
     "${pkgdir}/usr/share/applications/q2rtx.desktop"
 }
