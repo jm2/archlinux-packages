@@ -7,7 +7,7 @@ pkgrel=1
 _steamid=10090
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
-depends=('wine')
+depends=('wine' 'dxvk')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
         "https://github.com/jm2/archlinux-package-codwaw-wine-steam/raw/master/CoDWaW.exe"
         "https://github.com/jm2/archlinux-package-codwaw-wine-steam/raw/master/CoDWaWmp.exe")

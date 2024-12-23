@@ -9,7 +9,7 @@ pkgdesc="Wreckfest using WINE with data via GOG"
 arch=('i686' 'x86_64')
 url="https://www.gog.com/en/game/wreckfest"
 license=('custom')
-depends=('wine')
+depends=('wine' 'dxvk')
 makedepends=('innoextract' 'icoutils')
 source=("setup_${_pkgname}_${_pkgver}.exe::gogdownloader://${_pkgname}/en1installer0"
         "setup_${_pkgname}_${_pkgver}-1.bin::gogdownloader://${_pkgname}/en1installer1"

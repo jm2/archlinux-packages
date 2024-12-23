@@ -7,7 +7,7 @@ pkgrel=1
 _steamid=10190
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils' 'zip')
-depends=('wine')
+depends=('wine' 'dxvk')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
         "https://github.com/XLabsProject/iw4x-client/releases/download/v0.6.1/iw4x.dll"
         "git+https://github.com/XLabsProject/iw4x-rawfiles.git"

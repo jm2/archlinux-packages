@@ -7,7 +7,7 @@ pkgrel=1
 _steamid=476620
 arch=('x86_64')
 makedepends=('steamcmd' 'icoutils')
-depends=('wine' 'winetricks')
+depends=('wine' 'dxvk')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
         "Goldberg_Lan_Steam_Emu_master--a24a9c26.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/1590301114/artifacts/download")
 pkgdesc="Call of Duty: WWII using WINE with data via Steam"

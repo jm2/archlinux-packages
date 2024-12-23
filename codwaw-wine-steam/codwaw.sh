@@ -3,13 +3,14 @@ export WINEPREFIX="$HOME"/.codwaw/wine
 if [ ! -d "$HOME"/.codwaw ] ; then
    mkdir -p "$HOME"/.codwaw/wine
    wineboot -u
+   setup_dxvk install
 fi
 cd /opt/codwaw
 while getopts ":szmh" opt; do
   case ${opt} in
     s ) /usr/bin/wine CoDWaW.exe
       ;;
-    z ) /usr/bin/wine CoDWaW.exe
+    z ) /usr/bin/wine CoDWaWlf.exe
       ;;
     m ) /usr/bin/wine CoDWaWmp.exe
       ;;
@@ -18,4 +19,4 @@ while getopts ":szmh" opt; do
   esac
   exit
 done
-/usr/bin/wine CoDWaW.exe
+/usr/bin/wine CoDWaWlf.exe
