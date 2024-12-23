@@ -3,20 +3,22 @@
 pkgname=codwaw-wine-steam
 _pkgname=codwaw
 pkgver=1.7
-pkgrel=1
+pkgrel=2
 _steamid=10090
 arch=('i686' 'x86_64')
 makedepends=('steamcmd' 'icoutils')
 depends=('wine' 'dxvk')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
         "https://github.com/jm2/archlinux-package-codwaw-wine-steam/raw/master/CoDWaW.exe"
+        "https://github.com/jm2/archlinux-package-codwaw-wine-steam/raw/master/CoDWaWlf.exe"
         "https://github.com/jm2/archlinux-package-codwaw-wine-steam/raw/master/CoDWaWmp.exe")
 pkgdesc="Call of Duty: World at War using WINE with data via Steam"
 license=('custom')
 url='https://store.steampowered.com/app/10090/Call_of_Duty_World_at_War/'
-sha256sums=('84437aa7bf7baf82596c636d0a026933ee9197e67efd2887de59fb03c5aa8715'
+sha256sums=('d6039965a738de62d7d310ff429ebff93948751de341a9d5ae5e57b755635bf9'
             'd3f8517b127a1cb03e991d963c40df17bbe6de57f5e8a662fbc6598e43e797db'
             'f751d06799ed27f30c61d157ed292aa3adce73fbf9c30b92a5657b29624e8b31'
+            '16ff3bb33af41b9d4d59e47df7e6e6074b27d54801714464af0eaba2af1e64f4'
             'b0e265592901cd248b7358e8b37c8c1b5c85c6b24fb3cb378f62d601378e4fae')
 
 prepare() {
@@ -35,7 +37,7 @@ package() {
 
     # Move required files to pkgdir
     cp -r $srcdir/${_pkgname}/* $pkgdir/opt/${_pkgname}/
-    cp $srcdir/CoDWaW{,mp}.exe $pkgdir/opt/${_pkgname}/
+    cp $srcdir/CoDWaW{,lf,mp}.exe $pkgdir/opt/${_pkgname}/
     rm -rf $pkgdir/opt/${_pkgname}/steamapps
     rm $pkgdir/opt/${_pkgname}/*.vdf
     
