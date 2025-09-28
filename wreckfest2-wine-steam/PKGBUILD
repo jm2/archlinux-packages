@@ -13,7 +13,7 @@ source=("${_pkgname}.sh" "${_pkgname}.desktop"
 pkgdesc="Wreckfest 2 using WINE with data via Steam"
 license=('custom')
 install=wreckfest2.install
-url='https://store.steampowered.com/app/228380/Wreckfest/'
+url='https://store.steampowered.com/app/1203190/Wreckfest_2/'
 sha256sums=('b351a6a69133c4b45cbeb5ac0c67ea0387bb024f00777d245190cde9e133b2ae'
             '15b9d2d39a2f0bf8e10fc25d7a51806a4f275d53d7ba0648f981d25b763b8030'
             '8465984b01b42a75f5faea8f2d884bbd6085a695c40c2b90eb0385f0a5081266')
@@ -25,7 +25,7 @@ prepare() {
     printf "Enter your Steam username:"
     read steam_username
     steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir $srcdir/${_pkgname} +login $steam_username "+app_update ${_steamid} validate" +quit
-    wrestool -x -t -14 -o . ${_pkgname}/Wreckfest.exe
+    wrestool -x -t -14 -o . ${_pkgname}/Wreckfest2.exe
     icotool -x -o . *.ico
 }
 
@@ -46,7 +46,7 @@ package() {
              $pkgdir/usr/share/applications/${_pkgname}.desktop
 
     # Install icon file.
-    install -D -m 644 $srcdir/Wreckfest.exe_*_256x256x32.png \
+    install -D -m 644 $srcdir/Wreckfest2.exe_*_256x256x32.png \
              $pkgdir/usr/share/pixmaps/${_pkgname}.png
 
     # Install bash startup script.
