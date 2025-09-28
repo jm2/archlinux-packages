@@ -2,8 +2,8 @@
 
 pkgname=wreckfest-gog-dlc1
 _pkgname=wreckfest_season_pass_1
-pkgver=1.0j
-_pkgver="1.0j_(62993)"
+pkgver=1.0o
+_pkgver="1.0o_(79627)"
 pkgrel=1
 pkgdesc="Wreckfest GOG - Season Pass 1"
 arch=('any')
