@@ -7,14 +7,14 @@ pkgrel=1
 _steamid=1203190
 arch=('x86_64')
 makedepends=('steamcmd' 'icoutils')
-depends=('wine' 'dxvk')
+depends=('umu-launcher')
 source=("${_pkgname}.sh" "${_pkgname}.desktop"
         "Goldberg_Lan_Steam_Emu_master--475342f0.zip::https://gitlab.com/Mr_Goldberg/goldberg_emulator/-/jobs/4247811310/artifacts/download")
-pkgdesc="Wreckfest 2 using WINE with data via Steam"
+pkgdesc="Wreckfest 2 using WINE/Proton (umu-launcher) with data via Steam"
 license=('custom')
 install=wreckfest2.install
 url='https://store.steampowered.com/app/1203190/Wreckfest_2/'
-sha256sums=('b351a6a69133c4b45cbeb5ac0c67ea0387bb024f00777d245190cde9e133b2ae'
+sha256sums=('1076030e8d5ceace65df340d936d013de12c7586951f21ef25153f8b438737d2'
             '15b9d2d39a2f0bf8e10fc25d7a51806a4f275d53d7ba0648f981d25b763b8030'
             '8465984b01b42a75f5faea8f2d884bbd6085a695c40c2b90eb0385f0a5081266')
 
