@@ -3,7 +3,7 @@ export WINEPREFIX="$HOME"/.codwaw/wine
 if [ ! -d "$HOME"/.codwaw ] ; then
    mkdir -p "$HOME"/.codwaw/wine
    wineboot -u
-   setup_dxvk install
+   setup_dxvk install --symlink
 fi
 cd /opt/codwaw
 while getopts ":szmh" opt; do

@@ -3,7 +3,7 @@ export WINEPREFIX="$HOME"/.aoe3/wine
 if [ ! -d "$HOME"/.aoe3 ] ; then
    mkdir -p "$HOME"/.aoe3/wine
    wineboot -u
-   setup_dxvk install
+   setup_dxvk install --symlink
 fi
 cd /opt/aoe3
 while getopts ":oxyh" opt; do

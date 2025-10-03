@@ -5,7 +5,7 @@ if [ ! -d "$HOME"/.grid ] ; then
    mkdir -p "$HOME"/.grid/wine
    wineboot -u
    winetricks openal
-   setup_dxvk install
+   setup_dxvk install --symlink
 fi
 cd /opt/grid
 /usr/bin/wine GRID.exe
