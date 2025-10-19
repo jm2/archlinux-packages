@@ -1,5 +1,5 @@
 #! /bin/bash
-
+export WINEPREFIX="$HOME"/.ut2004/wine
 if [ ! -d "$HOME"/.ut2004 ] ; then
    mkdir -p "$HOME"/.ut2004/System
    cp /opt/ut2004/__support/app/System/* "$HOME"/.ut2004/System/
@@ -7,4 +7,20 @@ if [ ! -d "$HOME"/.ut2004 ] ; then
    chmod 600 "$HOME"/.ut2004/System/CDkey
 fi
 cd /opt/ut2004/System
+while getopts ":lwh" opt; do
+  case ${opt} in
+    l ) ./ut2004-bin
+      ;;
+    w ) if [ ! -d "$HOME"/.ut2004/wine ] ; then
+          mkdir -p "$HOME"/.ut2004/wine
+          wineboot -u
+          setup_dxvk install --symlink
+        fi
+        /usr/bin/wine ut2004-win64.exe
+      ;;
+    h ) echo "Usage: ut2004 [-l: native linux binary (default)|-w wine win64 binary]"
+      ;;
+  esac
+  exit
+done
 ./ut2004-bin

@@ -14,6 +14,7 @@ arch=('i686' 'x86_64')
 url="https://www.gog.com/game/unreal_tournament_2004_ece"
 license=('custom')
 depends=('sdl' 'openal' 'libstdc++5')
+optdepends=('wine' 'dxvk')
 makedepends=('lgogdownloader' 'innoextract')
 conflicts=('ut2004' 'ut2004-steam')
 source=("setup_unreal_tournament_2004_1.0_(18947).exe::gogdownloader://unreal_tournament_2004_ece/en1installer0"
@@ -21,13 +22,15 @@ source=("setup_unreal_tournament_2004_1.0_(18947).exe::gogdownloader://unreal_to
     "https://github.com/jm2/archlinux-package-ut2004-steam/raw/master/ut2004-lnxpatch$_pkgvermaj-$_pkgvermin.tar.bz2"
     "ut2004.desktop"
     "ut2004.png"
-    "ut2004.sh")
+    "ut2004.sh"
+    "ut2004-win64-3369.zip")
 sha256sums=('1f8712b4da90a22d822e4f2c2a4d841df2692be96d0f85f9064c6c77480c3b85'
             '81b6c1cf3931bf030d918461a134eff49921a0809cf215a6066639d0e6f0bf67'
             '438b9b13a367d46f23cce12b065382a55afa2fc68add1f1dd3db03b015f60bb3'
             'daf88b168e941d0bdd6c6637934a98d703f962afec7c64a1502c5b82ff66c6c8'
             '9fd35b406dc32caa6a0700bda89ac72f561346b919c4764d943bf4198ec032fd'
-            'bd03cfb6a2006cb8a7786111e156b4a71f31ea1af38fc1329c8364d6082bb952')
+            'd6ea5efaded023b1156858dd4ce794c80d5341b3ff3560100ec3b3b90a02c36e'
+            'c538472a3d9d4c9dd9c39d53c847008d4d291d73729b04e41cda14a367e41856')
 
 # If you want to use lgogdownloader add the following to /etc/makepkg.conf
 # DLAGENTS+=('gogdownloader::/usr/bin/lgogdownloader --download-file=%u -o %o')
@@ -70,6 +73,9 @@ package() {
          sed 's/ut2004-bin/&-linux-amd64/g' $pkgdir/opt/ut2004/Scripts/ut2004 > $pkgdir/opt/ut2004/Scripts/ut2004.TMP
 
          install -D -m 755 $pkgdir/opt/ut2004/Scripts/ut2004.TMP $pkgdir/opt/ut2004/Scripts/ut2004
+
+         # Add 64-bit Windows binaries as a fallback.
+         cp -r $srcdir/ut2004-win64-3369/* $pkgdir/opt/ut2004/
     else
         rm $pkgdir/opt/ut2004/System/ucc-bin-linux-amd64
         rm $pkgdir/opt/ut2004/System/ut2004-bin-linux-amd64
