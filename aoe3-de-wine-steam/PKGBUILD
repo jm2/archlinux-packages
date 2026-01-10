@@ -1,0 +1,85 @@
+# Maintainer: Your Name <your.email@example.com>
+
+pkgname=aoe3-de-wine-steam
+_pkgname=aoe3-de
+pkgver=1.0
+pkgrel=1
+_steamid=933110
+arch=('x86_64')
+makedepends=('steamcmd' 'icoutils' 'unzip' 'p7zip')
+depends=('wine' 'dxvk' 'lib32-gnutls' 'vulkan-icd-loader' 'lib32-vulkan-icd-loader')
+source=("${pkgname}.sh"
+        "${pkgname}.desktop"
+        "goldberg_emu.7z::https://github.com/Detanup01/gbe_fork/releases/download/release-2025_11_27/emu-win-release.7z"
+        "ageLANServerLauncherCompanion_full_v1.3.0.0.zip::https://github.com/luskaner/ageLANServerLauncherCompanion/releases/download/v1.3.0.0/ageLANServerLauncherCompanion_full_v1.3.0.0.zip"
+        "ColdClientLoader.ini"
+        "supported_languages.txt"
+        "achievements.json")
+sha256sums=('85af11d52afc4c8c437a51af499df24c8ac9efdd988e144f7dcbf325f518833f'
+            '7dbe763a679d14273278e76a9008619de4fcc7ac31186b820aa53edfdee02eaa'
+            'f387a51f99e660f3eeb2ccfbb9fb8621651c42931513d7d351ae1b6c83368e53'
+            'c9f3aea4dff03be3fecae6c8703b18b94efbc2562fc6b5c84f91fceee2e60404'
+            '567cde912d8a8ff1da367a8a4e2189c2bf87473d1e64a256af0c9219ad817069'
+            '2d14a10a7ad2e44480716bb78151f7b8b0f31361696e745fe0e4f5f141496f0b'
+            '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945')
+
+prepare() {
+    mkdir -p "$srcdir/${_pkgname}"
+
+    # Use steamcmd to get data.
+    printf "Enter your Steam username:"
+    read steam_username
+    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir "$srcdir/${_pkgname}" +login $steam_username "+app_update ${_steamid} validate" +quit
+
+    # Extract Icon
+    wrestool -x -t 14 -o . "${_pkgname}/AoE3DE_s.exe"
+    icotool -x -o . *.ico
+}
+
+package() {
+    mkdir -p "$pkgdir/opt/${pkgname}"
+
+    # Move game files
+    cp -r "$srcdir/${_pkgname}"/* "$pkgdir/opt/${pkgname}/"
+    rm -rf "$pkgdir/opt/${pkgname}/steamapps"
+    rm -f "$pkgdir/opt/${pkgname}"/*.vdf
+
+    # Goldberg Integration
+    find "$srcdir" -name "steam_api64.dll" -exec cp {} "$pkgdir/opt/${pkgname}/" \; -quit
+
+    _find_interfaces=$(find "$srcdir" -name "find_interfaces.sh" -print -quit)
+    if [ -n "$_find_interfaces" ]; then
+        "$_find_interfaces" "$pkgdir/opt/${pkgname}/steam_api64.dll" > "$pkgdir/opt/${pkgname}/steam_interfaces.txt" || true
+    fi
+
+    echo "${_steamid}" > "$pkgdir/opt/${pkgname}/steam_appid.txt"
+
+    # Companion Integration
+    # DLLs: Age3FakeOnline.dll, AgeFakeHost.dll
+    # Move to dlls/ folder as per configuration
+    install -d "$pkgdir/opt/${pkgname}/dlls"
+    find "$srcdir" -name "Age3FakeOnline.dll" -exec install -m 644 {} "$pkgdir/opt/${pkgname}/dlls/" \;
+    find "$srcdir" -name "AgeFakeHost.dll" -exec install -m 644 {} "$pkgdir/opt/${pkgname}/dlls/" \;
+
+    # ColdClientLoader.ini
+    install -D -m 644 "$srcdir/ColdClientLoader.ini" "$pkgdir/opt/${pkgname}/ColdClientLoader.ini"
+
+    # steam_settings configuration
+    install -d "$pkgdir/opt/${pkgname}/steam_settings"
+
+    # supported_languages.txt
+    install -m 644 "$srcdir/supported_languages.txt" "$pkgdir/opt/${pkgname}/steam_settings/supported_languages.txt"
+
+    # achievements.json
+    install -m 644 "$srcdir/achievements.json" "$pkgdir/opt/${pkgname}/steam_settings/achievements.json"
+
+
+    # Install desktop file
+    install -D -m 644 "$srcdir/${pkgname}.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
+
+    # Install icon (Pick the best resolution)
+    install -D -m 644 "$srcdir"/AoE3DE_s.exe_*_256x256x32.png "$pkgdir/usr/share/pixmaps/${pkgname}.png" || install -D -m 644 "$srcdir"/*.png "$pkgdir/usr/share/pixmaps/${pkgname}.png"
+
+    # Install startup script
+    install -D -m 755 "$srcdir/${pkgname}.sh" "$pkgdir/usr/bin/${pkgname}"
+}

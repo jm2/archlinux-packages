@@ -1,0 +1,107 @@
+# Maintainer: Your Name <your.email@example.com>
+
+pkgname=aoe2-de-wine-steam
+_pkgname=aoe2-de
+pkgver=1.0
+pkgrel=1
+_steamid=813780
+arch=('x86_64')
+makedepends=('steamcmd' 'icoutils' 'unzip' 'p7zip')
+depends=('wine' 'dxvk' 'lib32-gnutls' 'vulkan-icd-loader' 'lib32-vulkan-icd-loader')
+source=("${pkgname}.sh"
+        "${pkgname}.desktop"
+        "goldberg_emu.7z::https://github.com/Detanup01/gbe_fork/releases/download/release-2025_11_27/emu-win-release.7z"
+        "ageLANServerLauncherCompanion_full_v1.3.0.0.zip::https://github.com/luskaner/ageLANServerLauncherCompanion/releases/download/v1.3.0.0/ageLANServerLauncherCompanion_full_v1.3.0.0.zip"
+        "ColdClientLoader.ini"
+        "supported_languages.txt"
+        "achievements.json"
+        "configs.app.ini"
+        "configs.user.ini")
+sha256sums=('3ba5f956a68bdd5f72c7c82c75786b69c63c96615909f85d288f21c0ff68f238'
+            '2c74a707fb2748780200cdbb68d5a4c95170faaa4e2b0d8a92a4fe2e7a7af571'
+            'f387a51f99e660f3eeb2ccfbb9fb8621651c42931513d7d351ae1b6c83368e53'
+            'c9f3aea4dff03be3fecae6c8703b18b94efbc2562fc6b5c84f91fceee2e60404'
+            'ada3b5c94a1363bc7917f8e5d03914893abe3845bb60cd504391a1dc2524e08f'
+            '2d14a10a7ad2e44480716bb78151f7b8b0f31361696e745fe0e4f5f141496f0b'
+            'd7ac0beada1537fc70f23372c92042e4ff8eb4f74b15396941b6d22ec359c472'
+            'e0c086dbea16cae838a9fd2af3ff797db28f86b96f4e3100207bdebc3be65d08'
+            '665c1721d53709d7964293d70b27a2463d2f5f4b833a4b6f80523fe36821873d')
+
+prepare() {
+    mkdir -p "$srcdir/${_pkgname}"
+
+    # Verify Companion ZIP name - adjusted to likely name
+    # Extracted folder structure depends on zip content.
+    
+    # Use steamcmd to get data.
+    printf "Enter your Steam username:"
+    read steam_username
+    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir "$srcdir/${_pkgname}" +login $steam_username "+app_update ${_steamid} validate" +quit
+
+    # Extract Icon
+    wrestool -x -t 14 -o . "${_pkgname}/AoE2DE_s.exe"
+    icotool -x -o . *.ico
+}
+
+package() {
+    mkdir -p "$pkgdir/opt/${pkgname}"
+
+    # Move game files
+    cp -r "$srcdir/${_pkgname}"/* "$pkgdir/opt/${pkgname}/"
+    rm -rf "$pkgdir/opt/${pkgname}/steamapps"
+    rm -f "$pkgdir/opt/${pkgname}"/*.vdf
+
+    # Goldberg Integration
+    # Check if find_interfaces.sh exists or usage needs adjustment. 
+    # Wreckfest assumed $srcdir/linux/tools/find_interfaces.sh from Goldberg zip.
+    # We must ensure we are pointing to the right place.
+    # The goldberg zip extracts to 'Goldberg_Lan_Steam_Emu_master--...' or similar usually? 
+    # Actually the zip from that URL usually dumps contents or has a root folder.
+    # We will assume standard structure.
+    
+    # Copy steam_api64.dll from Goldberg
+    find "$srcdir" -name "steam_api64.dll" -exec cp {} "$pkgdir/opt/${pkgname}/" \; -quit
+
+    # Generate steam_interfaces.txt using find_interfaces.sh found in the source
+    _find_interfaces=$(find "$srcdir" -name "find_interfaces.sh" -print -quit)
+    if [ -n "$_find_interfaces" ]; then
+        "$_find_interfaces" "$pkgdir/opt/${pkgname}/steam_api64.dll" > "$pkgdir/opt/${pkgname}/steam_interfaces.txt" || true
+    fi
+
+    echo "${_steamid}" > "$pkgdir/opt/${pkgname}/steam_appid.txt"
+
+    # Companion Integration
+    # DLLs: Age2FakeOnline.dll, AgeFakeHost.dll
+    # Move to dlls/ folder as per configuration
+    install -d "$pkgdir/opt/${pkgname}/dlls"
+    find "$srcdir" -name "Age2FakeOnline.dll" -exec install -m 644 {} "$pkgdir/opt/${pkgname}/dlls/" \;
+    find "$srcdir" -name "AgeFakeHost.dll" -exec install -m 644 {} "$pkgdir/opt/${pkgname}/dlls/" \;
+
+    # ColdClientLoader.ini
+    install -D -m 644 "$srcdir/ColdClientLoader.ini" "$pkgdir/opt/${pkgname}/ColdClientLoader.ini"
+
+    # steam_settings configuration
+    install -d "$pkgdir/opt/${pkgname}/steam_settings"
+
+    # supported_languages.txt
+    install -m 644 "$srcdir/supported_languages.txt" "$pkgdir/opt/${pkgname}/steam_settings/supported_languages.txt"
+
+    # achievements.json
+    install -m 644 "$srcdir/achievements.json" "$pkgdir/opt/${pkgname}/steam_settings/achievements.json"
+
+    # configs.app.ini
+    install -m 644 "$srcdir/configs.app.ini" "$pkgdir/opt/${pkgname}/steam_settings/configs.app.ini"
+
+    # configs.user.ini
+    install -m 644 "$srcdir/configs.user.ini" "$pkgdir/opt/${pkgname}/steam_settings/configs.user.ini"
+
+
+    # Install desktop file
+    install -D -m 644 "$srcdir/${pkgname}.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
+
+    # Install icon (Pick the best resolution, e.g., 256x256)
+    install -D -m 644 "$srcdir"/AoE2DE_s.exe_*_256x256x32.png "$pkgdir/usr/share/pixmaps/${pkgname}.png" || install -D -m 644 "$srcdir"/*.png "$pkgdir/usr/share/pixmaps/${pkgname}.png"
+
+    # Install startup script
+    install -D -m 755 "$srcdir/${pkgname}.sh" "$pkgdir/usr/bin/${pkgname}"
+}
