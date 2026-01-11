@@ -29,9 +29,6 @@ sha256sums=('3ba5f956a68bdd5f72c7c82c75786b69c63c96615909f85d288f21c0ff68f238'
 
 prepare() {
     mkdir -p "$srcdir/${_pkgname}"
-
-    # Verify Companion ZIP name - adjusted to likely name
-    # Extracted folder structure depends on zip content.
     
     # Use steamcmd to get data.
     printf "Enter your Steam username:"
@@ -50,19 +47,10 @@ package() {
     cp -r "$srcdir/${_pkgname}"/* "$pkgdir/opt/${pkgname}/"
     rm -rf "$pkgdir/opt/${pkgname}/steamapps"
     rm -f "$pkgdir/opt/${pkgname}"/*.vdf
-
-    # Goldberg Integration
-    # Check if find_interfaces.sh exists or usage needs adjustment. 
-    # Wreckfest assumed $srcdir/linux/tools/find_interfaces.sh from Goldberg zip.
-    # We must ensure we are pointing to the right place.
-    # The goldberg zip extracts to 'Goldberg_Lan_Steam_Emu_master--...' or similar usually? 
-    # Actually the zip from that URL usually dumps contents or has a root folder.
-    # We will assume standard structure.
     
-    # Copy steam_api64.dll from Goldberg
+    # Goldberg Integration
     find "$srcdir" -name "steam_api64.dll" -exec cp {} "$pkgdir/opt/${pkgname}/" \; -quit
 
-    # Generate steam_interfaces.txt using find_interfaces.sh found in the source
     _find_interfaces=$(find "$srcdir" -name "find_interfaces.sh" -print -quit)
     if [ -n "$_find_interfaces" ]; then
         "$_find_interfaces" "$pkgdir/opt/${pkgname}/steam_api64.dll" > "$pkgdir/opt/${pkgname}/steam_interfaces.txt" || true
