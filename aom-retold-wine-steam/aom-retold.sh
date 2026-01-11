@@ -10,4 +10,4 @@ fi
 export WINEDLLOVERRIDES="AgeFakeHost=n,b"
 
 cd /opt/aom-retold-wine-steam
-/usr/bin/wine AoMRetold.exe "$@"
+/usr/bin/wine AoMRT_s.exe "$@"

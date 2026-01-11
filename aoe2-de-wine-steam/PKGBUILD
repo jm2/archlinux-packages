@@ -33,7 +33,34 @@ prepare() {
     # Use steamcmd to get data.
     printf "Enter your Steam username:"
     read steam_username
-    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir "$srcdir/${_pkgname}" +login $steam_username "+app_update ${_steamid} validate" "+app_update 1039811 validate" +quit
+    # Install Base Game and Force Download Enhanced Graphics Pack Depot
+    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir "$srcdir/${_pkgname}" +login $steam_username "+app_update ${_steamid} validate" "+download_depot 813780 1039811" +quit
+
+    # Move Enhanced Graphics Pack files from depot staging to game root
+    # download_depot ignores force_install_dir and downloads to default location.
+    # We check multiple possible locations based on common SteamCMD paths.
+    _depot_src_paths=(
+        "$srcdir/${_pkgname}/steamapps/content/app_813780/depot_1039811"
+        "$HOME/.steam/steamcmd/linux32/steamapps/content/app_813780/depot_1039811"
+        "$HOME/.local/share/Steam/steamcmd/linux32/steamapps/content/app_813780/depot_1039811"
+        "$HOME/.steam/steam/steamapps/content/app_813780/depot_1039811"
+    )
+    _depot_found=0
+    for _path in "${_depot_src_paths[@]}"; do
+        if [ -d "$_path" ]; then
+            echo "Found Enhanced Graphics Pack depot at $_path"
+            echo "Installing..."
+            cp -rn "$_path"/* "$srcdir/${_pkgname}/"
+            _depot_found=1
+            break
+        fi
+    done
+
+    if [ $_depot_found -eq 0 ]; then
+        echo "Warning: Enhanced Graphics Pack depot not found. Checked locations:"
+        printf '%s\n' "${_depot_src_paths[@]}"
+        echo "Installation of DLC may be incomplete. You can verify this by checking if 'resources/_common/drs/graphics' exists and is large."
+    fi
 
     # Extract Icon
     wrestool -x -t 14 -o . "${_pkgname}/AoE2DE_s.exe"

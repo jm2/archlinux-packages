@@ -15,11 +15,11 @@ source=("aom-retold.sh"
         "ColdClientLoader.ini"
         "supported_languages.txt"
         "achievements.json")
-sha256sums=('b6999e55a018114463eda7b699de01040936aeb9a3e57744180183c102e5cefd'
+sha256sums=('1a1a29cb6451233d3bfc7dca895cd0e5fa3ed3d0c30605f78f0116460bbbffc8'
             '76bd8244dc590e68bcdf1eea38d3662f5feaa299dcd5cfdb947de672c9146391'
             'f387a51f99e660f3eeb2ccfbb9fb8621651c42931513d7d351ae1b6c83368e53'
             'c9f3aea4dff03be3fecae6c8703b18b94efbc2562fc6b5c84f91fceee2e60404'
-            'f1fad2175e238438143ca0f31002ccdb0542636ecf4dd953a90b9b34947deb88'
+            '1111f1e23ee134c8787f7d2a5950bae8d52ebdb79bf263e446ce32cf94baa234'
             '2d14a10a7ad2e44480716bb78151f7b8b0f31361696e745fe0e4f5f141496f0b'
             '4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945')
 
