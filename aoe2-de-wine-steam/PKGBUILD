@@ -33,7 +33,7 @@ prepare() {
     # Use steamcmd to get data.
     printf "Enter your Steam username:"
     read steam_username
-    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir "$srcdir/${_pkgname}" +login $steam_username "+app_update ${_steamid} validate" +quit
+    steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir "$srcdir/${_pkgname}" +login $steam_username "+app_update ${_steamid} validate" "+app_update 1039811 validate" +quit
 
     # Extract Icon
     wrestool -x -t 14 -o . "${_pkgname}/AoE2DE_s.exe"
