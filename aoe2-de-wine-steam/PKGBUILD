@@ -8,8 +8,8 @@ _steamid=813780
 arch=('x86_64')
 makedepends=('steamcmd' 'icoutils' 'unzip' 'p7zip')
 depends=('wine' 'dxvk' 'lib32-gnutls' 'vulkan-icd-loader' 'lib32-vulkan-icd-loader')
-source=("${pkgname}.sh"
-        "${pkgname}.desktop"
+source=("aoe2-de.sh"
+        "aoe2-de.desktop"
         "goldberg_emu.7z::https://github.com/Detanup01/gbe_fork/releases/download/release-2025_11_27/emu-win-release.7z"
         "ageLANServerLauncherCompanion_full_v1.3.0.0.zip::https://github.com/luskaner/ageLANServerLauncherCompanion/releases/download/v1.3.0.0/ageLANServerLauncherCompanion_full_v1.3.0.0.zip"
         "ColdClientLoader.ini"
@@ -18,7 +18,7 @@ source=("${pkgname}.sh"
         "configs.app.ini"
         "configs.user.ini")
 sha256sums=('3ba5f956a68bdd5f72c7c82c75786b69c63c96615909f85d288f21c0ff68f238'
-            '2c74a707fb2748780200cdbb68d5a4c95170faaa4e2b0d8a92a4fe2e7a7af571'
+            '78dc96cc5e0f0c4ca277610757ebbae158565b113b7a66160c8046d05e689abd'
             'f387a51f99e660f3eeb2ccfbb9fb8621651c42931513d7d351ae1b6c83368e53'
             'c9f3aea4dff03be3fecae6c8703b18b94efbc2562fc6b5c84f91fceee2e60404'
             'ada3b5c94a1363bc7917f8e5d03914893abe3845bb60cd504391a1dc2524e08f'
@@ -85,11 +85,11 @@ package() {
 
 
     # Install desktop file
-    install -D -m 644 "$srcdir/${pkgname}.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
+    install -D -m 644 "$srcdir/aoe2-de.desktop" "$pkgdir/usr/share/applications/aoe2-de.desktop"
 
     # Install icon (Pick the best resolution, e.g., 256x256)
     install -D -m 644 "$srcdir"/AoE2DE_s.exe_*_256x256x32.png "$pkgdir/usr/share/pixmaps/${pkgname}.png" || install -D -m 644 "$srcdir"/*.png "$pkgdir/usr/share/pixmaps/${pkgname}.png"
 
     # Install startup script
-    install -D -m 755 "$srcdir/${pkgname}.sh" "$pkgdir/usr/bin/${pkgname}"
+    install -D -m 755 "$srcdir/aoe2-de.sh" "$pkgdir/usr/bin/aoe2-de"
 }

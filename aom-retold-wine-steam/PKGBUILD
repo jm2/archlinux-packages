@@ -8,15 +8,15 @@ _steamid=1934680
 arch=('x86_64')
 makedepends=('steamcmd' 'icoutils' 'unzip' 'p7zip')
 depends=('wine' 'dxvk' 'lib32-gnutls' 'vulkan-icd-loader' 'lib32-vulkan-icd-loader')
-source=("${pkgname}.sh"
-        "${pkgname}.desktop"
+source=("aom-retold.sh"
+        "aom-retold.desktop"
         "goldberg_emu.7z::https://github.com/Detanup01/gbe_fork/releases/download/release-2025_11_27/emu-win-release.7z"
         "ageLANServerLauncherCompanion_full_v1.3.0.0.zip::https://github.com/luskaner/ageLANServerLauncherCompanion/releases/download/v1.3.0.0/ageLANServerLauncherCompanion_full_v1.3.0.0.zip"
         "ColdClientLoader.ini"
         "supported_languages.txt"
         "achievements.json")
 sha256sums=('b6999e55a018114463eda7b699de01040936aeb9a3e57744180183c102e5cefd'
-            '087ae56dee04074e2f5c1ca40234eb6a292e7f3b4155dc2401d938557708549f'
+            '76bd8244dc590e68bcdf1eea38d3662f5feaa299dcd5cfdb947de672c9146391'
             'f387a51f99e660f3eeb2ccfbb9fb8621651c42931513d7d351ae1b6c83368e53'
             'c9f3aea4dff03be3fecae6c8703b18b94efbc2562fc6b5c84f91fceee2e60404'
             'f1fad2175e238438143ca0f31002ccdb0542636ecf4dd953a90b9b34947deb88'
@@ -32,7 +32,7 @@ prepare() {
     steamcmd +@sSteamCmdForcePlatformType windows +@ShutdownOnFailedCommand 1 +force_install_dir "$srcdir/${_pkgname}" +login $steam_username "+app_update ${_steamid} validate" +quit
 
     # Extract Icon
-    wrestool -x -t 14 -o . "${_pkgname}/AoMRetold.exe"
+    wrestool -x -t 14 -o . "${_pkgname}/AoMRT_s.exe"
     icotool -x -o . *.ico
 }
 
@@ -74,11 +74,11 @@ package() {
 
 
     # Install desktop file
-    install -D -m 644 "$srcdir/${pkgname}.desktop" "$pkgdir/usr/share/applications/${pkgname}.desktop"
+    install -D -m 644 "$srcdir/aom-retold.desktop" "$pkgdir/usr/share/applications/aom-retold.desktop"
 
     # Install icon (Pick the best resolution)
-    install -D -m 644 "$srcdir"/AoMRetold.exe_*_256x256x32.png "$pkgdir/usr/share/pixmaps/${pkgname}.png" || install -D -m 644 "$srcdir"/*.png "$pkgdir/usr/share/pixmaps/${pkgname}.png"
+    install -D -m 644 "$srcdir"/AoMRT_s.exe_*_256x256x32.png "$pkgdir/usr/share/pixmaps/${pkgname}.png" || install -D -m 644 "$srcdir"/*.png "$pkgdir/usr/share/pixmaps/${pkgname}.png"
 
     # Install startup script
-    install -D -m 755 "$srcdir/${pkgname}.sh" "$pkgdir/usr/bin/${pkgname}"
+    install -D -m 755 "$srcdir/aom-retold.sh" "$pkgdir/usr/bin/aom-retold"
 }
