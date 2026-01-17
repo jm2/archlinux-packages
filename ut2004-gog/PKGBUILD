@@ -29,7 +29,7 @@ sha256sums=('1f8712b4da90a22d822e4f2c2a4d841df2692be96d0f85f9064c6c77480c3b85'
             '438b9b13a367d46f23cce12b065382a55afa2fc68add1f1dd3db03b015f60bb3'
             'daf88b168e941d0bdd6c6637934a98d703f962afec7c64a1502c5b82ff66c6c8'
             '9fd35b406dc32caa6a0700bda89ac72f561346b919c4764d943bf4198ec032fd'
-            'd6ea5efaded023b1156858dd4ce794c80d5341b3ff3560100ec3b3b90a02c36e'
+            '64e371ee10cad45c422de02ac3014a2a16811b750944e519ef0910a23d17977f'
             'c538472a3d9d4c9dd9c39d53c847008d4d291d73729b04e41cda14a367e41856')
 
 # If you want to use lgogdownloader add the following to /etc/makepkg.conf
@@ -68,18 +68,11 @@ package() {
     # Create symlinks to add the ut2004 startup and utility scripts to usr/bin
     ln -s /opt/ut2004/Scripts/ut2004 $pkgdir/usr/bin/ut2004 || return 1
 
-    if [ "$CARCH" == "x86_64" ]
-    then
-         sed 's/ut2004-bin/&-linux-amd64/g' $pkgdir/opt/ut2004/Scripts/ut2004 > $pkgdir/opt/ut2004/Scripts/ut2004.TMP
+     # Install script (no modification needed as it is now generic)
+     install -D -m 755 $srcdir/ut2004.sh $pkgdir/opt/ut2004/Scripts/ut2004
 
-         install -D -m 755 $pkgdir/opt/ut2004/Scripts/ut2004.TMP $pkgdir/opt/ut2004/Scripts/ut2004
-
-         # Add 64-bit Windows binaries as a fallback.
-         cp -r $srcdir/ut2004-win64-3369/* $pkgdir/opt/ut2004/
-    else
-        rm $pkgdir/opt/ut2004/System/ucc-bin-linux-amd64
-        rm $pkgdir/opt/ut2004/System/ut2004-bin-linux-amd64
-    fi
+     # Add 64-bit Windows binaries as a fallback.
+     cp -r $srcdir/ut2004-win64-3369/* $pkgdir/opt/ut2004/
 
     # Create symbolic links to system libraries in game directory.
     ln -s /usr/lib/libSDL-1.2.so.0 $pkgdir/opt/ut2004/System || return 1

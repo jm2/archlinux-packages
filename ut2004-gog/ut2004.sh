@@ -23,4 +23,17 @@ while getopts ":lwh" opt; do
   esac
   exit
 done
-./ut2004-bin
+
+# Architecture detection
+ARCH=$(uname -m)
+if [[ "$ARCH" == "x86_64" || "$ARCH" == "amd64" ]]; then
+    if [ -f "./ut2004-bin-linux-amd64" ]; then
+        BINARY="./ut2004-bin-linux-amd64"
+    else
+        BINARY="./ut2004-bin"
+    fi
+else
+    BINARY="./ut2004-bin"
+fi
+
+$BINARY
