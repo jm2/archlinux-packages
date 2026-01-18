@@ -9,5 +9,5 @@ fi
 # DLL overrides for Companion
 export WINEDLLOVERRIDES="Age3FakeOnline,AgeFakeHost=n,b"
 
-cd /opt/aoe3-de-wine-steam
-/usr/bin/wine AoE3DE_s.exe "$@"
+cd /opt/aoe3-de/agelanserver
+./launcher "$@"

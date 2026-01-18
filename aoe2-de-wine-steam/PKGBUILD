@@ -16,16 +16,18 @@ source=("aoe2-de.sh"
         "supported_languages.txt"
         "achievements.json"
         "configs.app.ini"
-        "configs.user.ini")
+        "configs.user.ini"
+        "ageLANServer_full_v1.12.1_linux_x86-64.tar.gz::https://github.com/luskaner/ageLANServer/releases/download/v1.12.1/ageLANServer_full_1.12.1_linux_x86-64.tar.gz")
 sha256sums=('3ba5f956a68bdd5f72c7c82c75786b69c63c96615909f85d288f21c0ff68f238'
             '78dc96cc5e0f0c4ca277610757ebbae158565b113b7a66160c8046d05e689abd'
             'f387a51f99e660f3eeb2ccfbb9fb8621651c42931513d7d351ae1b6c83368e53'
             'c9f3aea4dff03be3fecae6c8703b18b94efbc2562fc6b5c84f91fceee2e60404'
-            'ada3b5c94a1363bc7917f8e5d03914893abe3845bb60cd504391a1dc2524e08f'
+            'fa614233b352e8f2b93a6c162c4314ee7d38b529399a3c636bf6b688ef0ce81e'
             '2d14a10a7ad2e44480716bb78151f7b8b0f31361696e745fe0e4f5f141496f0b'
             'd7ac0beada1537fc70f23372c92042e4ff8eb4f74b15396941b6d22ec359c472'
             'e0c086dbea16cae838a9fd2af3ff797db28f86b96f4e3100207bdebc3be65d08'
-            '665c1721d53709d7964293d70b27a2463d2f5f4b833a4b6f80523fe36821873d')
+            '665c1721d53709d7964293d70b27a2463d2f5f4b833a4b6f80523fe36821873d'
+            '8bf97a4b1a32310d4226fbd62554134f8298338963650ffa39701ad036c83012')
 
 prepare() {
     mkdir -p "$srcdir/${_pkgname}"
@@ -68,47 +70,81 @@ prepare() {
 }
 
 package() {
-    mkdir -p "$pkgdir/opt/${pkgname}"
+    mkdir -p "$pkgdir/opt/${_pkgname}"
 
     # Move game files
-    cp -r "$srcdir/${_pkgname}"/* "$pkgdir/opt/${pkgname}/"
-    rm -rf "$pkgdir/opt/${pkgname}/steamapps"
-    rm -f "$pkgdir/opt/${pkgname}"/*.vdf
+    cp -r "$srcdir/${_pkgname}"/* "$pkgdir/opt/${_pkgname}/"
+    rm -rf "$pkgdir/opt/${_pkgname}/steamapps"
+    rm -f "$pkgdir/opt/${_pkgname}"/*.vdf
     
     # Goldberg Integration
-    find "$srcdir" -name "steam_api64.dll" -exec cp {} "$pkgdir/opt/${pkgname}/" \; -quit
+    find "$srcdir" -name "steam_api64.dll" -exec cp {} "$pkgdir/opt/${_pkgname}/" \; -quit
 
     _find_interfaces=$(find "$srcdir" -name "find_interfaces.sh" -print -quit)
     if [ -n "$_find_interfaces" ]; then
-        "$_find_interfaces" "$pkgdir/opt/${pkgname}/steam_api64.dll" > "$pkgdir/opt/${pkgname}/steam_interfaces.txt" || true
+        "$_find_interfaces" "$pkgdir/opt/${_pkgname}/steam_api64.dll" > "$pkgdir/opt/${_pkgname}/steam_interfaces.txt" || true
     fi
 
-    echo "${_steamid}" > "$pkgdir/opt/${pkgname}/steam_appid.txt"
+    echo "${_steamid}" > "$pkgdir/opt/${_pkgname}/steam_appid.txt"
 
     # Companion Integration
     # DLLs: Age2FakeOnline.dll, AgeFakeHost.dll
     # Move to dlls/ folder as per configuration
-    install -d "$pkgdir/opt/${pkgname}/dlls"
-    find "$srcdir" -name "Age2FakeOnline.dll" -exec install -m 644 {} "$pkgdir/opt/${pkgname}/dlls/" \;
-    find "$srcdir" -name "AgeFakeHost.dll" -exec install -m 644 {} "$pkgdir/opt/${pkgname}/dlls/" \;
+    install -d "$pkgdir/opt/${_pkgname}/dlls"
+    find "$srcdir" -name "Age2FakeOnline.dll" -exec install -m 644 {} "$pkgdir/opt/${_pkgname}/dlls/" \;
+    find "$srcdir" -name "AgeFakeHost.dll" -exec install -m 644 {} "$pkgdir/opt/${_pkgname}/dlls/" \;
 
     # ColdClientLoader.ini
-    install -D -m 644 "$srcdir/ColdClientLoader.ini" "$pkgdir/opt/${pkgname}/ColdClientLoader.ini"
+    install -D -m 644 "$srcdir/ColdClientLoader.ini" "$pkgdir/opt/${_pkgname}/ColdClientLoader.ini"
 
     # steam_settings configuration
-    install -d "$pkgdir/opt/${pkgname}/steam_settings"
+    install -d "$pkgdir/opt/${_pkgname}/steam_settings"
 
     # supported_languages.txt
-    install -m 644 "$srcdir/supported_languages.txt" "$pkgdir/opt/${pkgname}/steam_settings/supported_languages.txt"
+    install -m 644 "$srcdir/supported_languages.txt" "$pkgdir/opt/${_pkgname}/steam_settings/supported_languages.txt"
 
     # achievements.json
-    install -m 644 "$srcdir/achievements.json" "$pkgdir/opt/${pkgname}/steam_settings/achievements.json"
+    install -m 644 "$srcdir/achievements.json" "$pkgdir/opt/${_pkgname}/steam_settings/achievements.json"
 
     # configs.app.ini
-    install -m 644 "$srcdir/configs.app.ini" "$pkgdir/opt/${pkgname}/steam_settings/configs.app.ini"
+    install -m 644 "$srcdir/configs.app.ini" "$pkgdir/opt/${_pkgname}/steam_settings/configs.app.ini"
 
     # configs.user.ini
-    install -m 644 "$srcdir/configs.user.ini" "$pkgdir/opt/${pkgname}/steam_settings/configs.user.ini"
+install -m 644 "$srcdir/configs.user.ini" "$pkgdir/opt/${_pkgname}/steam_settings/configs.user.ini"
+
+    # Age LAN Server Integration
+    # Binaries: server, launcher, battle-server-manager
+    install -d "$pkgdir/opt/${_pkgname}/agelanserver"
+    
+    # Extract ageLANServer tarball (it's already extracted by makepkg into srcdir, likely a folder named after the archive or contents)
+    # The tarball structure usually has the binaries at the root or a subfolder. 
+    # Based on docs: server, launcher, battle-server-manager binaries.
+    
+    # We assume the tarball extracts into valid paths. Let's find and copy them.
+    # Note: filenames might have versions. We'll use wildcards carefully or find command.
+    
+    find "$srcdir" -name "server" -type f -exec install -m 755 {} "$pkgdir/opt/${_pkgname}/agelanserver/" \;
+    find "$srcdir" -name "launcher" -type f -exec install -m 755 {} "$pkgdir/opt/${_pkgname}/agelanserver/" \;
+    find "$srcdir" -name "battle-server-manager" -type f -exec install -m 755 {} "$pkgdir/opt/${_pkgname}/agelanserver/" \;
+    
+    # Copy resources folder if it exists (it contains config templates)
+    if [ -d "$srcdir/resources" ]; then
+        cp -r "$srcdir/resources" "$pkgdir/opt/${_pkgname}/agelanserver/"
+    fi
+     # Also check for a root resources folder from the ageLANServer archive specifically if it's not merged.
+    
+    # Configuration: config.aoe2.toml
+    # We need to set --overrideHosts for the launcher.
+    _launcher_config="$pkgdir/opt/${_pkgname}/agelanserver/resources/config.aoe2.toml"
+    if [ -f "$_launcher_config" ]; then
+        # Configure for native Linux launcher with Wine
+        sed -i "s|Executable = 'auto'|Executable = '/usr/bin/wine'|g" "$_launcher_config"
+        sed -i "s|Path = 'auto'|Path = '/opt/aoe2-de'|g" "$_launcher_config"
+        
+        # Set arguments: game executable path + overrideHosts
+        # We need to be careful with TOML array syntax
+        sed -i 's|ExecutableArgs = \[\]|ExecutableArgs = ["/opt/aoe2-de/AoE2DE_s.exe", "--overrideHosts=/opt/aoe2-de/dlls/AgeFakeHost.dll"]|g' "$_launcher_config"
+    fi
 
 
     # Install desktop file

@@ -9,5 +9,5 @@ fi
 # DLL overrides for Companion
 export WINEDLLOVERRIDES="AgeFakeHost=n,b"
 
-cd /opt/aom-retold-wine-steam
-/usr/bin/wine AoMRT_s.exe "$@"
+cd /opt/aom-retold/agelanserver
+./launcher "$@"
