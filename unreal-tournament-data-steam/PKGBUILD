@@ -60,5 +60,6 @@ package() {
     rm -f "$pkgdir/opt/unreal-tournament/installscript.vdf"
 
     msg2 "Fixing permissions..."
-    find "$pkgdir/opt/unreal-tournament" -type d -exec chmod 755 {} +                                                       find "$pkgdir/opt/unreal-tournament" -type f -exec chmod 644 {} +
+    find "$pkgdir/opt/unreal-tournament" -type d -exec chmod 755 {} +
+    find "$pkgdir/opt/unreal-tournament" -type f -exec chmod 644 {} +
 }
