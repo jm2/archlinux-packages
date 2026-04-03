@@ -17,6 +17,12 @@
 **/*.log
 **/*.log.*
 
+# Windows binaries (recursive)
+**/*.exe
+**/*.dll
+**/*.msi
+**/*.bin
+
 # Text files (recursive)
 **/*.txt
 
