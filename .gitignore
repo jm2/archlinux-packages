@@ -1,0 +1,36 @@
+# PKGBUILD build artifacts (recursive)
+**/src/
+**/pkg/
+
+# Arch Linux package files (recursive)
+**/*.pkg.tar.zst
+**/*.pkg.tar.xz
+**/*.pkg.tar.gz
+
+# Source archives (recursive)
+**/*.tar.gz
+**/*.tar.xz
+**/*.tar.zst
+**/*.zip
+
+# Log files (recursive)
+**/*.log
+**/*.log.*
+
+# Text files (recursive)
+**/*.txt
+
+# Signature files (recursive)
+**/*.sig
+
+# Partial downloads (recursive)
+**/*.part
+
+# Rust build artifacts (recursive)
+**/target/
+
+# Nested git repositories (cloned during build)
+**/.git/
+
+# Any subdirectory within a package folder (source clones, extracted build trees, etc.)
+/*/*/
