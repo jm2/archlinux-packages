@@ -22,6 +22,11 @@
 **/*.dll
 **/*.msi
 **/*.bin
+**/*.cab
+
+# ISO files (recursive)
+**/*.iso
+**/*.ISO
 
 # Text files (recursive)
 **/*.txt
